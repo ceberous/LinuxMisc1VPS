@@ -22,14 +22,16 @@ module.exports.startUser = START_USER;
 function START_QUE() {
 	return new Promise( async function( resolve , reject ) {
 		try {
-			var index = await RU.getKey( RC.RESTREAMING.QUE_INDEX );
-			if ( !index ) { index = 0; }
-			else if ( index === "null" ) { index = 0; }
-			else { index = parseInt( index ); }
+			await require( "../twitch.js" ).getLiveUsers();
+			var final_index = 0;
+			var fetched_index = await RU.getKey( RC.RESTREAMING.QUE_INDEX );
+			if ( fetched_index ) {
+				if ( fetched_index !== "null" ) { final_index = parseInt( fetched_index ); }
+			}
 			await require( "../utils/generic.js" ).pkillProcess( "python3" );
 			await require( "../utils/generic.js" ).pkillProcess( "vlc" );
 			await require( "../utils/generic.js" ).sleep( 2000 );
-			const username = await RU.getFromListByIndex( RC.RESTREAMING.QUE , index );
+			const username = await RU.getFromListByIndex( RC.RESTREAMING.QUE , final_index );
 			await require( "../utils/generic.js" ).startPYScript( SCRIPT_NAME , username );
 			await RU.setKey( RC.RESTREAMING.ACTIVE , username );
 			resolve();

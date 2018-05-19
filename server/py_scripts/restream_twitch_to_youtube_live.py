@@ -77,7 +77,7 @@ if __name__=="__main__":
         print_video_urls(m3u8_obj)
 
         if len(m3u8_obj.playlists) > 0:
-            if len( m3u8_obj.playlists ) > :3
+            if len( m3u8_obj.playlists ) > 3:
                 url = m3u8_obj.playlists[-3].uri
             else:
                 url = m3u8_obj.playlists[0].uri
