@@ -20,7 +20,7 @@ function INITIALIZE() {
   							console.log( "no currently restreaming" );
   							if ( current_live.indexOf( PreferredStreamer ) !== -1 ) {
   								console.log( "Preferred Streamer is Online and we are not steraming anything !!!" );
-								await require( "./states/restreaming.js" ).startUser( PreferredStreamer );
+								require( "./states/restreaming.js" ).startUser( PreferredStreamer );
   							}
   						}
   						else {
@@ -31,7 +31,7 @@ function INITIALIZE() {
   							else if ( current_live.indexOf( PreferredStreamer ) !== -1 ) {
   								if ( PreferredStreamer !== currently_active ) {
   									console.log( "We were streaming something else , but now preferred streamer is online" );
-  									await require( "./states/restreaming.js" ).startUser( PreferredStreamer );
+  									require( "./states/restreaming.js" ).startUser( PreferredStreamer );
   								}
   							}
   						}

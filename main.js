@@ -23,9 +23,9 @@ var app = localIP = server = wss = null;
 	// wss.on( "connection" , require( "./server/websocketManager.js" ).onConnection ); 
 
 	await require( "./server/discordManager.js" ).initialize();
-	//await require( "./server/scheduleManager.js" ).initialize();
+	await require( "./server/scheduleManager.js" ).initialize();
 
-	await require( "./server/utils/twitch.js" ).getLiveUsers();
+	//await require( "./server/utils/twitch.js" ).getLiveUsers();
 
 	// server.listen( port , async function() {
 	// 	const localIP = ip.address();
