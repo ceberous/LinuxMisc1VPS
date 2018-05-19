@@ -40,3 +40,14 @@ function START_PY_SCRIPT( wName , ...args ) {
 	catch( error ) { console.log( error ); return( error ); }
 }
 module.exports.startPYScript = START_PY_SCRIPT;
+
+
+function START_PROCESS( wName , wArg1 ) {
+	try {
+		var exec_string = wName;
+		if ( wArg1 ) { exec_string = exec_string + " " + wArg1; }
+		exec( exec_string , { silent: true ,  async: false } );
+	}
+	catch( error ) { console.log( error ); return( error ); }
+}
+module.exports.startProcess = START_PROCESS;

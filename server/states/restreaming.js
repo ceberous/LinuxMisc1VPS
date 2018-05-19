@@ -2,10 +2,15 @@ const RU = require( "../utils/redis.js" );
 const RC = require( "../constants/redis.js" );
 
 const SCRIPT_NAME = "restream_twitch_to_youtube_live.py";
+const MANUAL_PROCESS = "/usr/local/bin/startRestream";
 
 function START_USER( wUserName ) {
 	return new Promise( async function( resolve , reject ) {
 		try {
+			await require( "../utils/generic.js" ).pkillProcess( "python3" );
+			await require( "../utils/generic.js" ).sleep( 2000 );
+			await require( "../utils/generic.js" ).startProcess( MANUAL_PROCESS , wUserName );
+			await RU.setKey( RC.RESTREAMING.ACTIVE , wUserName );
 			resolve();
 		}
 		catch( error ) { console.log( error ); reject( error ); }
