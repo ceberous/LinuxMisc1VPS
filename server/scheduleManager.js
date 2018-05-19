@@ -43,7 +43,7 @@ async function TWITCH_UPDATE() {
 
 function INITIALIZE() {
 	RU.delKey( RC.RESTREAMING.ACTIVE );
-	twitch_update =  schedule.scheduleJob( "*/1 * * * *" , function() {
+	twitch_update =  schedule.scheduleJob( "*/5 * * * *" , function() {
 		TWITCH_UPDATE();
 	});
 }
