@@ -5,7 +5,8 @@ const SCRIPT_NAME = "restream_twitch_to_youtube_live.py";
 const MANUAL_PROCESS = "/usr/local/bin/startRestream";
 
 const YTPersonal = require( "../../personal.js" ).youtube;
-const WatchURL = "< https://www.youtube.com/user/" + YTPersonal.channel_id + "/videos?view=2&live_view=501&flow=grid >";
+const YTNormalBase = "https://www.youtube.com/watch?v=";
+const YTGamingBase = "https://gaming.youtube.com/watch?v=";
 
 function START_USER( wUserName ) {
 	return new Promise( async function( resolve , reject ) {
@@ -15,7 +16,11 @@ function START_USER( wUserName ) {
 			await require( "../utils/generic.js" ).sleep( 2000 );
 			await require( "../utils/generic.js" ).startProcess( MANUAL_PROCESS , wUserName );
 			await RU.setKey( RC.RESTREAMING.ACTIVE , wUserName );
-			await require( "../discordManager.js" ).post( WatchURL , "restreaming" );
+			await require( "../discordManager.js" ).post( "Starting --> " + username , "restreaming" );
+			const WatchID = await require( "../utils/youtube.js" ).getLiveVideos();
+			if ( WatchID ) {
+				await require( "../discordManager.js" ).post( YTNormalBase + WatchURL[ 0 ] + "\n" + YTGamingBase + WatchURL[ 0 ] , "restreaming" );
+			}
 			resolve();
 		}
 		catch( error ) { console.log( error ); reject( error ); }
@@ -39,8 +44,11 @@ function START_QUE() {
 			await require( "../utils/generic.js" ).pkillProcess( "vlc" );
 			await require( "../utils/generic.js" ).sleep( 2000 );
 			const username = await RU.getFromListByIndex( RC.RESTREAMING.QUE , final_index );
-			await require( "../discordManager.js" ).post( "Starting --> " + username , "restreaming" );	
-			await require( "../discordManager.js" ).post( WatchURL , "restreaming" );
+			await require( "../discordManager.js" ).post( "Starting --> " + username , "restreaming" );
+			const WatchID = await require( "../utils/youtube.js" ).getLiveVideos();
+			if ( WatchID ) {
+				await require( "../discordManager.js" ).post( YTNormalBase + WatchURL[ 0 ] + "\n" + YTGamingBase + WatchURL[ 0 ] , "restreaming" );
+			}
 			await require( "../utils/generic.js" ).startPYScript( SCRIPT_NAME , username );
 			await RU.setKey( RC.RESTREAMING.ACTIVE , username );			
 			resolve();
@@ -81,7 +89,10 @@ function NEXT( wUserName ) {
 				await RU.setKey( RC.RESTREAMING.QUE_INDEX , 0 );
 			}
 			await require( "../discordManager.js" ).post( "Starting --> " + username , "restreaming" );			
-			await require( "../discordManager.js" ).post( WatchURL , "restreaming" );
+			const WatchID = await require( "../utils/youtube.js" ).getLiveVideos();
+			if ( WatchID ) {
+				await require( "../discordManager.js" ).post( YTNormalBase + WatchURL[ 0 ] + "\n" + YTGamingBase + WatchURL[ 0 ] , "restreaming" );
+			}
 			await require( "../utils/generic.js" ).startPYScript( SCRIPT_NAME , username );
 			await RU.setKey( RC.RESTREAMING.ACTIVE , username );			
 			resolve();
@@ -113,7 +124,10 @@ function PREVIOUS( wUserName ) {
 				await RU.setKey( RC.RESTREAMING.QUE_INDEX , 0 );
 			}
 			await require( "../discordManager.js" ).post( "Starting --> " + username , "restreaming" );			
-			await require( "../discordManager.js" ).post( WatchURL , "restreaming" );
+			const WatchID = await require( "../utils/youtube.js" ).getLiveVideos();
+			if ( WatchID ) {
+				await require( "../discordManager.js" ).post( YTNormalBase + WatchURL[ 0 ] + "\n" + YTGamingBase + WatchURL[ 0 ] , "restreaming" );
+			}
 			await require( "../utils/generic.js" ).startPYScript( SCRIPT_NAME , username );
 			await RU.setKey( RC.RESTREAMING.ACTIVE , username );				
 			resolve();
