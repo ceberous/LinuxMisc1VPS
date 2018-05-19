@@ -100,6 +100,7 @@ function PREVIOUS( wUserName ) {
 			if ( index < 0 ) {
 				index = await RU.getListLength( RC.RESTREAMING.QUE );
 				index = parseInt( index );
+				index = index - 1;
 				await RU.setKey( RC.RESTREAMING.QUE_INDEX , index );
 			}
 			await require( "../utils/generic.js" ).pkillProcess( "python3" );
