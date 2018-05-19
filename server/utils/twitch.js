@@ -37,9 +37,25 @@ function GET_LIVE_USERS( wResetIndex ) {
 							console.log( wTMP );
 							await RU.setListFromArray( RC.RESTREAMING.LIVE_USERS , wTMP );
 							var pref_list = await RU.getFullList( RC.RESTREAMING.PREFERENCE_LIST );
-							var built_que = wTMP.sort(function(a, b){  
-								return pref_list.indexOf( a ) - pref_list.indexOf( b );
-							});
+							console.log( "pref list ==" );
+							console.log( pref_list );
+							var built_que = wTMP 	;
+							if ( pref_list ) {
+								if ( pref_list.length > 0 ) {
+									console.log( "sorting" );
+									built_que = wTMP.sort(function(a, b){
+										// if ( pref_list.indexOf( a ) ) {
+										// 	if ( pref_list.indexOf( b  ) ) {
+												
+										// 	}
+										// 	else { return a; }
+										// }
+										// else { return a; }
+										return pref_list.indexOf( a ) - pref_list.indexOf( b );
+									});
+								}
+							}
+
 							console.log( "Built Que === " );
 							console.log( built_que );
 							await RU.delKey( RC.RESTREAMING.QUE );
