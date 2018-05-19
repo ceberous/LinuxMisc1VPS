@@ -59,13 +59,13 @@ function START_PROCESS( wName , wArg1 ) {
 module.exports.startProcess = START_PROCESS;
 
 
-const RestreamLaunchFP = path.join( __dirname , "./restreamLancher.js" );
-console.log( RestreamLaunchFP );
+const RestreamLaunchFP = path.join( __dirname , "./restreamLauncher.js" );
+const ConfigFP = path.join( __dirname , ".." , "py_scripts" , "config.json" );
 function START_RESTREAM_LAUNCHER( wUserName ) {
 	try {
 		var config = require( "../py_scripts/config.json" );
 		config[ "twitch_channel_name" ] = wUserName;
-		fs.writeFileSync( RestreamLaunchFP , JSON.stringify( config ) , "utf8" );
+		fs.writeFileSync( ConfigFP , JSON.stringify( config ) , "utf8" );
 		var wEX1 = exec( "node " + RestreamLaunchFP , { silent:true , async: false });
 		if ( wEX1.stderr.length > 1 ) { console.log( "ERROR --> Could not Launch Restream" ); return null; }
 		console.log( "Launched Restream" );

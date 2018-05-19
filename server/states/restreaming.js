@@ -33,7 +33,7 @@ function START_USER( wUserName ) {
 			require( "../utils/generic.js" ).startRestreamLauncher( wUserName );
 			console.log( "START_USER Stage 2" );
 			await RU.setKey( RC.RESTREAMING.ACTIVE , wUserName );
-			await require( "../discordManager.js" ).post( "Starting --> " + username , "restreaming" );
+			await require( "../discordManager.js" ).post( "Starting --> " + wUserName , "restreaming" );
 			await require( "../utils/generic.js" ).sleep( 3000 );
 			console.log( "START_USER Stage 3" );
 			await GET_LIVE_YT_URLS();

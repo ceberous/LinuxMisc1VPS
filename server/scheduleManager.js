@@ -45,7 +45,6 @@ function INITIALIZE() {
 	RU.delKey( RC.RESTREAMING.ACTIVE );
 	twitch_update =  schedule.scheduleJob( "*/1 * * * *" , function() {
 		TWITCH_UPDATE();
-		return;
 	});
 }
 module.exports.initialize = INITIALIZE;
