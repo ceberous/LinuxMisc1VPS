@@ -14,7 +14,11 @@ function GET_LIVE_YT_URLS() {
 			console.log( "here in live videos" );
 			const WatchID = await require( "../utils/youtube.js" ).getLiveVideos();
 			if ( WatchID ) {
-				await require( "../discordManager.js" ).post( "<" + YTNormalBase + WatchID[ 0 ] + ">\n" + "<" + YTGamingBase + WatchID[ 0 ] + ">" , "restreaming" );
+				if ( WatchID[ 0 ] ) {
+					if ( WatchID[ 0 ] !== "undefined" ) {
+						await require( "../discordManager.js" ).post( "<" + YTNormalBase + WatchID[ 0 ] + ">\n" + "<" + YTGamingBase + WatchID[ 0 ] + ">" , "restreaming" );
+					}
+				}
 			}
 			resolve( WatchID );
 		}
