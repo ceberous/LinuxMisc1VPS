@@ -30,7 +30,7 @@ function START_USER( wUserName ) {
 			await require( "../utils/generic.js" ).pkillProcess( "python3" );
 			await require( "../utils/generic.js" ).pkillProcess( "vlc" );
 			await require( "../utils/generic.js" ).sleep( 2000 );
-			require( "../utils/generic.js" ).startProcess( MANUAL_PROCESS , wUserName );
+			require( "../utils/generic.js" ).startRestreamLauncher( wUserName );
 			console.log( "START_USER Stage 2" );
 			await RU.setKey( RC.RESTREAMING.ACTIVE , wUserName );
 			await require( "../discordManager.js" ).post( "Starting --> " + username , "restreaming" );

@@ -37,12 +37,12 @@ async function TWITCH_UPDATE() {
 			}
 		}	
 		console.log( "Done with Twitch Live User Update JOB" );
-		return;
 	}
 	catch( error ) { console.log( error ); return( error ); }
 }
 
 function INITIALIZE() {
+	RU.delKey( RC.RESTREAMING.ACTIVE );
 	twitch_update =  schedule.scheduleJob( "*/1 * * * *" , function() {
 		TWITCH_UPDATE();
 		return;

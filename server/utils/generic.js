@@ -1,4 +1,5 @@
 require("shelljs/global");
+const fs = require( "fs" );
 const path = require("path");
 const StringDecoder = require("string_decoder").StringDecoder;
 const decoder = new StringDecoder( "utf8" );
@@ -56,3 +57,19 @@ function START_PROCESS( wName , wArg1 ) {
 	catch( error ) { console.log( error ); return( error ); }
 }
 module.exports.startProcess = START_PROCESS;
+
+
+const RestreamLaunchFP = path.join( __dirname , "./restreamLancher.js" );
+console.log( RestreamLaunchFP );
+function START_RESTREAM_LAUNCHER( wUserName ) {
+	try {
+		var config = require( "../py_scripts/config.json" );
+		config[ "twitch_channel_name" ] = wUserName;
+		fs.writeFileSync( RestreamLaunchFP , JSON.stringify( config ) , "utf8" );
+		var wEX1 = exec( "node " + RestreamLaunchFP , { silent:true , async: false });
+		if ( wEX1.stderr.length > 1 ) { console.log( "ERROR --> Could not Launch Restream" ); return null; }
+		console.log( "Launched Restream" );
+	}
+	catch( error ) { console.log( error ); return( error ); }
+}
+module.exports.startRestreamLauncher = START_RESTREAM_LAUNCHER;

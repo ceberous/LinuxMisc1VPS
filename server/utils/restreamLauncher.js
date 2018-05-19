@@ -1,0 +1,1 @@
+var ws=require("child_process").spawn;var cp=ws("/usr/local/bin/startRestream");cp.unref(),process.exit(0);
