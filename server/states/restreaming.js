@@ -20,7 +20,7 @@ function START_USER( wUserName ) {
 			await require( "../utils/generic.js" ).sleep( 3000 );
 			const WatchID = await require( "../utils/youtube.js" ).getLiveVideos();
 			if ( WatchID ) {
-				await require( "../discordManager.js" ).post( "< " + YTNormalBase + WatchID[ 0 ] + " >\n" + "< " + YTGamingBase + WatchID[ 0 ] + " >" , "restreaming" );
+				await require( "../discordManager.js" ).post( "<" + YTNormalBase + WatchID[ 0 ] + ">\n" + "<" + YTGamingBase + WatchID[ 0 ] + ">" , "restreaming" );
 			}
 			resolve();
 		}
@@ -50,7 +50,7 @@ function START_QUE() {
 			await require( "../utils/generic.js" ).sleep( 3000 );
 			const WatchID = await require( "../utils/youtube.js" ).getLiveVideos();
 			if ( WatchID ) {
-				await require( "../discordManager.js" ).post( "< " + YTNormalBase + WatchID[ 0 ] + " >\n" + "< " + YTGamingBase + WatchID[ 0 ] + " >" , "restreaming" );
+				await require( "../discordManager.js" ).post( "<" + YTNormalBase + WatchID[ 0 ] + ">\n" + "<" + YTGamingBase + WatchID[ 0 ] + ">" , "restreaming" );
 			}
 			await RU.setKey( RC.RESTREAMING.ACTIVE , username );			
 			resolve();
@@ -95,7 +95,7 @@ function NEXT( wUserName ) {
 			await require( "../utils/generic.js" ).sleep( 3000 );
 			const WatchID = await require( "../utils/youtube.js" ).getLiveVideos();
 			if ( WatchID ) {
-				await require( "../discordManager.js" ).post( "< " + YTNormalBase + WatchID[ 0 ] + " >\n" + "< " + YTGamingBase + WatchID[ 0 ] + " >" , "restreaming" );
+				await require( "../discordManager.js" ).post( "<" + YTNormalBase + WatchID[ 0 ] + ">\n" + "<" + YTGamingBase + WatchID[ 0 ] + ">" , "restreaming" );
 			}
 			await RU.setKey( RC.RESTREAMING.ACTIVE , username );	
 			resolve();
@@ -131,7 +131,7 @@ function PREVIOUS( wUserName ) {
 			await require( "../utils/generic.js" ).sleep( 3000 );
 			const WatchID = await require( "../utils/youtube.js" ).getLiveVideos();
 			if ( WatchID ) {
-				await require( "../discordManager.js" ).post( "< " + YTNormalBase + WatchID[ 0 ] + " >\n" + "< " + YTGamingBase + WatchID[ 0 ] + " >" , "restreaming" );
+				await require( "../discordManager.js" ).post( "<" + YTNormalBase + WatchID[ 0 ] + ">\n" + "<" + YTGamingBase + WatchID[ 0 ] + ">" , "restreaming" );
 			}
 			await RU.setKey( RC.RESTREAMING.ACTIVE , username );				
 			resolve();
