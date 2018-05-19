@@ -8,6 +8,20 @@ const YTPersonal = require( "../../personal.js" ).youtube;
 const YTNormalBase = "https://www.youtube.com/watch?v=";
 const YTGamingBase = "https://gaming.youtube.com/watch?v=";
 
+function GET_LIVE_YT_URLS() {
+	return new Promise( async function( resolve , reject ) {
+		try {
+			const WatchID = await require( "../utils/youtube.js" ).getLiveVideos();
+			if ( WatchID ) {
+				await require( "../discordManager.js" ).post( "<" + YTNormalBase + WatchID[ 0 ] + ">\n" + "<" + YTGamingBase + WatchID[ 0 ] + ">" , "restreaming" );
+			}
+			resolve( WatchID );
+		}
+		catch( error ) { console.log( error ); reject( error ); }
+	});
+}
+module.exports.getLiveYTURLS = GET_LIVE_YT_URLS;
+
 function START_USER( wUserName ) {
 	return new Promise( async function( resolve , reject ) {
 		try {
@@ -18,10 +32,7 @@ function START_USER( wUserName ) {
 			await RU.setKey( RC.RESTREAMING.ACTIVE , wUserName );
 			await require( "../discordManager.js" ).post( "Starting --> " + username , "restreaming" );
 			await require( "../utils/generic.js" ).sleep( 3000 );
-			const WatchID = await require( "../utils/youtube.js" ).getLiveVideos();
-			if ( WatchID ) {
-				await require( "../discordManager.js" ).post( "<" + YTNormalBase + WatchID[ 0 ] + ">\n" + "<" + YTGamingBase + WatchID[ 0 ] + ">" , "restreaming" );
-			}
+			await GET_LIVE_YT_URLS();
 			resolve();
 		}
 		catch( error ) { console.log( error ); reject( error ); }

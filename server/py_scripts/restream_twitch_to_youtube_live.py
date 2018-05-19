@@ -74,15 +74,29 @@ if __name__=="__main__":
 
         m3u8_obj = get_live_stream( TWITCH_CHANNEL )
 
-        print_video_urls(m3u8_obj)
+        #print_video_urls(m3u8_obj)
 
         if len(m3u8_obj.playlists) > 0:
             if len( m3u8_obj.playlists ) > 3:
-                url = m3u8_obj.playlists[-3].uri
+                item = m3u8_obj.playlists[-3]
+            elif len( m3u8_obj.playlists ) > 2:
+                item = m3u8_obj.playlists[-2]
             else:
-                url = m3u8_obj.playlists[0].uri
+                item = m3u8_obj.playlists[0]
+            si = item.stream_info
+            print( si )
+            bandwidth = si.bandwidth/(1024)
+            quality = item.media[0].name
+            resolution = si.resolution if si.resolution else "?"
+            uri = item.uri
+            #print(item.stream_info, item.media, item.uri[1])
+            txt = "\n{} kbit/s ({}), resolution={}".format(bandwidth, quality, resolution)
+            print(txt)
+            print(len(txt)*"-")
+            url = item.uri
             print('streaming to youtube from {}'.format(url))
-            os.system("cvlc {} --sout '#transcode{{vcodec=h264,acodec=mp3,samplerate=44100,fps=30}}:std{{access=rtmp,mux=ffmpeg{{mux=flv}},dst=rtmp://a.rtmp.youtube.com/live2/'{}".format(url, config['youtube_stream_key']))
+            print("")
+            os.system("cvlc {} --sout '#transcode{{vcodec=h264,acodec=mp3,samplerate=44100,fps=28}}:std{{access=rtmp,mux=ffmpeg{{mux=flv}},dst=rtmp://a.rtmp.youtube.com/live2/'{}".format(url, config['youtube_stream_key']))
         else:
             print('no twitch stream')
 

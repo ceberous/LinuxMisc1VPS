@@ -102,8 +102,9 @@ function INITIALIZE() {
 						await POST_ID( "Following: \n" + followers.join( " , " ) , msg.channel.id );						
 					}
 					else if ( msg.content.startsWith( "!live" ) ) {
-						const live = await require( "./utils/twitch.js" ).getLiveUsers();
-						await POST_ID( "Live Users == \n" + live.join( " , " ) , msg.channel.id );
+						const live_twitch = await require( "./utils/twitch.js" ).getLiveUsers();
+						await POST_ID( "Live Twitch Users == \n" + live_twitch.join( " , " ) , msg.channel.id );
+						await require( "./states/restreaming.js" ).getLiveYTURLS();
 					}
 					else if ( msg.content.startsWith( "!que" ) ) {
 						const que = await require( "./states/restreaming.js" ).getQue();
