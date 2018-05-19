@@ -8,9 +8,9 @@ function GET_LIVE_VIDEOS() {
 		try {
 			var wResults = [];
 			request( wURL , function ( err , response , body ) {
-				if ( err ) { console.log( err ); reject( err ); return; }
+				if ( err ) { console.log( err ); resolve( wResults ); return; }
 				try { var $ = cheerio.load( body ); }
-				catch(err) { reject( "cheerio load failed" ); return; }
+				catch(err) { resolve( wResults ); return; }
 				$( ".yt-lockup-title > a" ).each( function () {
 					var wID = $( this ).attr( "href" );
 					wID = wID.substring( wID.length - 11 , wID.length );
