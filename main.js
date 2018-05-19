@@ -23,7 +23,7 @@ var app = localIP = server = wss = null;
 	// wss.on( "connection" , require( "./server/websocketManager.js" ).onConnection ); 
 
 	await require( "./server/discordManager.js" ).initialize();
-	await require( "./server/scheduleManager.js" ).initialize();
+	require( "./server/scheduleManager.js" ).initialize();
 
 	//await require( "./server/utils/twitch.js" ).getLiveUsers();
 

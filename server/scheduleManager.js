@@ -6,7 +6,7 @@ const RC = require( "./constants/redis.js" );
 const PreferredStreamer = require( "../personal.js" ).twitch.preferred_streamer;
 const StartTwitchUser = require( "./states/restreaming.js" ).startUser;
 
-var SCHEDULE = [];
+var twitch_update = null;
 
 async function TWITCH_UPDATE() {
 	try {
@@ -43,17 +43,9 @@ async function TWITCH_UPDATE() {
 }
 
 function INITIALIZE() {
-	return new Promise( function( resolve , reject ) {
-		try {
-			SCHEDULE.push({
-				name: "twitch live users update" ,
-				pid: schedule.scheduleJob( "*/1 * * * *" , function() {
-					TWITCH_UPDATE();
-				})
-			});
-			resolve();
-		}
-		catch( error ) { console.log( error ); reject( error ); }
+	twitch_update =  schedule.scheduleJob( "*/1 * * * *" , function() {
+		TWITCH_UPDATE();
+		return;
 	});
 }
 module.exports.initialize = INITIALIZE;
