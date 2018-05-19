@@ -56,11 +56,18 @@ function REDIS_GET_FROM_LIST_BY_INDEX( wKey , wIndex ) {
 		catch( error ) { console.log( error ); reject( error ); }
 	});
 }
+function REDIS_GET_LIST_LENGTH( wKey ) {
+	return new Promise( function( resolve , reject ) {
+		try { redis.llen( wKey , function( err , key ) { resolve( key ); }); }
+		catch( error ) { console.log( error ); reject( error ); }
+	});
+}
 
 module.exports.setKey= REDIS_SET_KEY;
 module.exports.getKey = REDIS_GET_KEY;
 module.exports.delKey = REDIS_DELETE_KEY;
 module.exports.getFullList = REDIS_GET_FULL_LIST;
+module.exports.getListLength = REDIS_GET_LIST_LENGTH;
 module.exports.setListFromArray = REDIS_SET_LIST_FROM_ARRAY;
 module.exports.getFromListByIndex = REDIS_GET_FROM_LIST_BY_INDEX;
 module.exports.incrementInteger = REDIS_INCREMENT_INTEGER;

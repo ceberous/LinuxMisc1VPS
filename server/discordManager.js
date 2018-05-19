@@ -80,10 +80,10 @@ function INITIALIZE() {
 						}
 					}					
 					else if ( msg.content.startsWith( "!next" ) ) {
-
+						await require( "./states/restreaming.js" ).next();
 					}
 					else if ( msg.content.startsWith( "!previous" ) ) {
-
+						await require( "./states/restreaming.js" ).previous();
 					}
 					else if ( msg.content.startsWith( "!followers" ) ) {
 						const followers = await require( "./utils/twitch.js" ).getFollowers();
