@@ -72,7 +72,7 @@ function INITIALIZE() {
 						// Start Specific User
 						if ( msg.content.includes( "user" ) ) {
 							var user = msg.content.split( " " );
-							if ( user ) { if ( user[ 1 ] ) { await require( "./states/restreaming.js" ).startUser( user[ 1 ] ); } }
+							if ( user ) { if ( user[ 2 ] ) { await require( "./states/restreaming.js" ).startUser( user[ 2 ] ); } }
 						}
 						// Start from Que Position
 						else{

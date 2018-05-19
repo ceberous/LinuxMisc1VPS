@@ -12,7 +12,9 @@ import os
 import sys
 from time import sleep
 
-config_str = open('config.json', 'r').read()
+CONFIG_FP = os.path.dirname( __file__ )
+CONFIG_FP = os.path.join( CONFIG_FP , "config.json" )
+config_str = open( CONFIG_FP , 'r').read()
 config_cleansed = re.sub(r'\\\n', '', config_str)
 config_cleansed = re.sub(r'//.*\n', '\n', config_cleansed)
 
@@ -21,6 +23,8 @@ config = json.loads(config_cleansed)
 TWITCH_CHANNEL = config['twitch_channel_name']
 if len( sys.argv ) > 1:
     TWITCH_CHANNEL = sys.argv[ 1 ]
+
+print( "TRYING TO STREAM : " + TWITCH_CHANNEL )
 
 USHER_API = 'http://usher.twitch.tv/api/channel/hls/{channel}.m3u8?player=twitchweb' +\
     '&token={token}&sig={sig}&$allow_audio_only=true&allow_source=true' + \
@@ -73,7 +77,10 @@ if __name__=="__main__":
         print_video_urls(m3u8_obj)
 
         if len(m3u8_obj.playlists) > 0:
-            url = m3u8_obj.playlists[0].uri
+            if len( m3u8_obj.playlists ) > 3:
+                url = m3u8_obj.playlists[-3].uri
+            else:
+                url = m3u8_obj.playlists[0].uri
             print('streaming to youtube from {}'.format(url))
             os.system("cvlc {} --sout '#transcode{{vcodec=h264,acodec=mp3,samplerate=44100}}:std{{access=rtmp,mux=ffmpeg{{mux=flv}},dst=rtmp://a.rtmp.youtube.com/live2/'{}".format(url, config['youtube_stream_key']))
         else:
