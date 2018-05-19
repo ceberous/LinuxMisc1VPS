@@ -8,6 +8,7 @@ function START_USER( wUserName ) {
 	return new Promise( async function( resolve , reject ) {
 		try {
 			await require( "../utils/generic.js" ).pkillProcess( "python3" );
+			await require( "../utils/generic.js" ).pkillProcess( "vlc" );
 			await require( "../utils/generic.js" ).sleep( 2000 );
 			await require( "../utils/generic.js" ).startProcess( MANUAL_PROCESS , wUserName );
 			await RU.setKey( RC.RESTREAMING.ACTIVE , wUserName );
@@ -26,6 +27,7 @@ function START_QUE() {
 			else if ( index === "null" ) { index = 0; }
 			else { index = parseInt( index ); }
 			await require( "../utils/generic.js" ).pkillProcess( "python3" );
+			await require( "../utils/generic.js" ).pkillProcess( "vlc" );
 			await require( "../utils/generic.js" ).sleep( 2000 );
 			const username = await RU.getFromListByIndex( RC.RESTREAMING.QUE , index );
 			await require( "../utils/generic.js" ).startPYScript( SCRIPT_NAME , username );
@@ -76,6 +78,7 @@ function RESTART() {
 	return new Promise( async function( resolve , reject ) {
 		try {
 			await require( "../utils/generic.js" ).pkillProcess( "python3" );
+			await require( "../utils/generic.js" ).pkillProcess( "vlc" );
 			await require( "../utils/generic.js" ).sleep( 2000 );
 			resolve();
 		}
@@ -88,6 +91,7 @@ function STOP() {
 	return new Promise( async function( resolve , reject ) {
 		try {
 			await require( "../utils/generic.js" ).pkillProcess( "python3" );
+			await require( "../utils/generic.js" ).pkillProcess( "vlc" );
 			await RU.delKey( RC.RESTREAMING.ACTIVE );
 			await require( "../utils/generic.js" ).sleep( 2000 );
 			resolve();
