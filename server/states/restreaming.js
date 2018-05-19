@@ -17,6 +17,7 @@ function START_USER( wUserName ) {
 			await require( "../utils/generic.js" ).startProcess( MANUAL_PROCESS , wUserName );
 			await RU.setKey( RC.RESTREAMING.ACTIVE , wUserName );
 			await require( "../discordManager.js" ).post( "Starting --> " + username , "restreaming" );
+			await require( "../utils/generic.js" ).sleep( 3000 );
 			const WatchID = await require( "../utils/youtube.js" ).getLiveVideos();
 			if ( WatchID ) {
 				await require( "../discordManager.js" ).post( YTNormalBase + WatchURL[ 0 ] + "\n" + YTGamingBase + WatchURL[ 0 ] , "restreaming" );
@@ -44,12 +45,13 @@ function START_QUE() {
 			await require( "../utils/generic.js" ).pkillProcess( "vlc" );
 			await require( "../utils/generic.js" ).sleep( 2000 );
 			const username = await RU.getFromListByIndex( RC.RESTREAMING.QUE , final_index );
+			await require( "../utils/generic.js" ).startPYScript( SCRIPT_NAME , username );
 			await require( "../discordManager.js" ).post( "Starting --> " + username , "restreaming" );
+			await require( "../utils/generic.js" ).sleep( 3000 );
 			const WatchID = await require( "../utils/youtube.js" ).getLiveVideos();
 			if ( WatchID ) {
 				await require( "../discordManager.js" ).post( YTNormalBase + WatchURL[ 0 ] + "\n" + YTGamingBase + WatchURL[ 0 ] , "restreaming" );
 			}
-			await require( "../utils/generic.js" ).startPYScript( SCRIPT_NAME , username );
 			await RU.setKey( RC.RESTREAMING.ACTIVE , username );			
 			resolve();
 		}
@@ -89,12 +91,13 @@ function NEXT( wUserName ) {
 				await RU.setKey( RC.RESTREAMING.QUE_INDEX , 0 );
 			}
 			await require( "../discordManager.js" ).post( "Starting --> " + username , "restreaming" );			
+			await require( "../utils/generic.js" ).startPYScript( SCRIPT_NAME , username );
+			await require( "../utils/generic.js" ).sleep( 3000 );
 			const WatchID = await require( "../utils/youtube.js" ).getLiveVideos();
 			if ( WatchID ) {
 				await require( "../discordManager.js" ).post( YTNormalBase + WatchURL[ 0 ] + "\n" + YTGamingBase + WatchURL[ 0 ] , "restreaming" );
 			}
-			await require( "../utils/generic.js" ).startPYScript( SCRIPT_NAME , username );
-			await RU.setKey( RC.RESTREAMING.ACTIVE , username );			
+			await RU.setKey( RC.RESTREAMING.ACTIVE , username );	
 			resolve();
 		}
 		catch( error ) { console.log( error ); reject( error ); }
@@ -124,11 +127,12 @@ function PREVIOUS( wUserName ) {
 				await RU.setKey( RC.RESTREAMING.QUE_INDEX , 0 );
 			}
 			await require( "../discordManager.js" ).post( "Starting --> " + username , "restreaming" );			
+			await require( "../utils/generic.js" ).startPYScript( SCRIPT_NAME , username );
+			await require( "../utils/generic.js" ).sleep( 3000 );
 			const WatchID = await require( "../utils/youtube.js" ).getLiveVideos();
 			if ( WatchID ) {
 				await require( "../discordManager.js" ).post( YTNormalBase + WatchURL[ 0 ] + "\n" + YTGamingBase + WatchURL[ 0 ] , "restreaming" );
 			}
-			await require( "../utils/generic.js" ).startPYScript( SCRIPT_NAME , username );
 			await RU.setKey( RC.RESTREAMING.ACTIVE , username );				
 			resolve();
 		}
