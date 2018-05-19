@@ -26,14 +26,18 @@ module.exports.getLiveYTURLS = GET_LIVE_YT_URLS;
 function START_USER( wUserName ) {
 	return new Promise( async function( resolve , reject ) {
 		try {
+			console.log( "START_USER Stage 1" );
 			await require( "../utils/generic.js" ).pkillProcess( "python3" );
 			await require( "../utils/generic.js" ).pkillProcess( "vlc" );
 			await require( "../utils/generic.js" ).sleep( 2000 );
-			await require( "../utils/generic.js" ).startProcess( MANUAL_PROCESS , wUserName );
+			require( "../utils/generic.js" ).startProcess( MANUAL_PROCESS , wUserName );
+			console.log( "START_USER Stage 2" );
 			await RU.setKey( RC.RESTREAMING.ACTIVE , wUserName );
 			await require( "../discordManager.js" ).post( "Starting --> " + username , "restreaming" );
 			await require( "../utils/generic.js" ).sleep( 3000 );
+			console.log( "START_USER Stage 3" );
 			await GET_LIVE_YT_URLS();
+			console.log( "START_USER Done" );
 			resolve();
 		}
 		catch( error ) { console.log( error ); reject( error ); }

@@ -46,7 +46,12 @@ function START_PROCESS( wName , wArg1 ) {
 	try {
 		var exec_string = wName;
 		if ( wArg1 ) { exec_string = exec_string + " " + wArg1; }
+		//exec_string = exec_string + " &";
+		console.log( "Launching Process --> " );
+		console.log( exec_string );
 		exec( exec_string , { silent: true ,  async: false } );
+		console.log( "Done Launching" );
+		return;
 	}
 	catch( error ) { console.log( error ); return( error ); }
 }
