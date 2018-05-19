@@ -77,12 +77,12 @@ if __name__=="__main__":
         print_video_urls(m3u8_obj)
 
         if len(m3u8_obj.playlists) > 0:
-            if len( m3u8_obj.playlists ) > 3:
+            if len( m3u8_obj.playlists ) > :3
                 url = m3u8_obj.playlists[-3].uri
             else:
                 url = m3u8_obj.playlists[0].uri
             print('streaming to youtube from {}'.format(url))
-            os.system("cvlc {} --sout '#transcode{{vcodec=h264,acodec=mp3,samplerate=44100}}:std{{access=rtmp,mux=ffmpeg{{mux=flv}},dst=rtmp://a.rtmp.youtube.com/live2/'{}".format(url, config['youtube_stream_key']))
+            os.system("cvlc {} --sout '#transcode{{vcodec=h264,acodec=mp3,samplerate=44100,fps=30}}:std{{access=rtmp,mux=ffmpeg{{mux=flv}},dst=rtmp://a.rtmp.youtube.com/live2/'{}".format(url, config['youtube_stream_key']))
         else:
             print('no twitch stream')
 

@@ -65,7 +65,7 @@ function INITIALIZE() {
 				// Restreaming Channel Messages
 				if ( msg.channel.id === discordCreds.channels.restreaming ) {
 					if ( msg.content.startsWith( "!stop" ) ) {
-
+						await require( "./states/restreaming.js" ).stop();
 					}
 					else if ( msg.content.startsWith( "!start" ) || msg.content.startsWith( "!watch" ) ) {
 						

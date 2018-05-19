@@ -45,7 +45,7 @@ var app = localIP = server = wss = null;
 		await require( "./server/discordManager.js" ).shutdown();
 		setTimeout( async ()=> {
 			await require( "./server/utils/generic.js" ).pkillProcess( "python3" );
-			await require( "../utils/generic.js" ).pkillProcess( "vlc" );
+			await require( "./server/utils/generic.js" ).pkillProcess( "vlc" );
 			process.exit(1);
 		} , 2000 );
 	});
