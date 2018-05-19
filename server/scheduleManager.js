@@ -4,6 +4,7 @@ const RU = require( "./utils/redis.js" );
 const RC = require( "./constants/redis.js" );
 
 const PreferredStreamer = require( "../personal.js" ).twitch.preferred_streamer;
+const StartTwitchUser = require( "./states/restreaming.js" ).startUser;
 
 var SCHEDULE = [];
 
@@ -18,7 +19,7 @@ async function TWITCH_UPDATE() {
 					console.log( "no currently restreaming" );
 					if ( current_live.indexOf( PreferredStreamer ) !== -1 ) {
 						console.log( "Preferred Streamer is Online and we are not steraming anything !!!" );
-						require( "./states/restreaming.js" ).startUser( PreferredStreamer );
+						StartTwitchUser( PreferredStreamer );
 					}
 				}
 				else {
@@ -29,12 +30,13 @@ async function TWITCH_UPDATE() {
 					else if ( current_live.indexOf( PreferredStreamer ) !== -1 ) {
 						if ( PreferredStreamer !== currently_active ) {
 							console.log( "We were streaming something else , but now preferred streamer is online" );
-							require( "./states/restreaming.js" ).startUser( PreferredStreamer );
+							StartTwitchUser( PreferredStreamer );
 						}
 					}
 				}
 			}
 		}	
+		console.log( "Done with Twitch Live User Update JOB" );
 		return;
 	}
 	catch( error ) { console.log( error ); return( error ); }
@@ -47,7 +49,7 @@ function INITIALIZE() {
 				name: "twitch live users update" ,
 				pid: schedule.scheduleJob( "*/1 * * * *" , function() {
 					TWITCH_UPDATE();
-				});
+				})
 			});
 			resolve();
 		}

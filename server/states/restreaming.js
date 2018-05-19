@@ -11,6 +11,7 @@ const YTGamingBase = "https://gaming.youtube.com/watch?v=";
 function GET_LIVE_YT_URLS() {
 	return new Promise( async function( resolve , reject ) {
 		try {
+			console.log( "here in live videos" );
 			const WatchID = await require( "../utils/youtube.js" ).getLiveVideos();
 			if ( WatchID ) {
 				await require( "../discordManager.js" ).post( "<" + YTNormalBase + WatchID[ 0 ] + ">\n" + "<" + YTGamingBase + WatchID[ 0 ] + ">" , "restreaming" );

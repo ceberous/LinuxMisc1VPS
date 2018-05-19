@@ -96,7 +96,8 @@ if __name__=="__main__":
             url = item.uri
             print('streaming to youtube from {}'.format(url))
             print("")
-            os.system("cvlc {} --sout '#transcode{{vcodec=h264,acodec=mp3,samplerate=44100,fps=28}}:std{{access=rtmp,mux=ffmpeg{{mux=flv}},dst=rtmp://a.rtmp.youtube.com/live2/'{}".format(url, config['youtube_stream_key']))
+            #os.system("cvlc {} --sout '#transcode{{vcodec=h264,acodec=mp3,samplerate=44100,fps=28}}:std{{access=rtmp,mux=ffmpeg{{mux=flv}},dst=rtmp://a.rtmp.youtube.com/live2/'{}".format(url, config['youtube_stream_key']))
+            os.system("cvlc {} --sout '#transcode{{vcodec=FLV1,acodec=mp3,samplerate=44100}}:std{{access=rtmp,mux=ffmpeg{{mux=flv}},dst=rtmp://a.rtmp.youtube.com/live2/'{}".format(url, config['youtube_stream_key']))
         else:
             print('no twitch stream')
 
