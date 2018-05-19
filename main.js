@@ -46,8 +46,8 @@ var app = localIP = server = wss = null;
 	process.on( "SIGINT" , async function () {
 		await require( "./server/discordManager.js" ).shutdown();
 		setTimeout( async ()=> {
-			await require( "./server/utils/generic.js" ).pkillProcess( "python3" );
-			await require( "./server/utils/generic.js" ).pkillProcess( "vlc" );
+			// await STATE_MANAGER.stop();
+			await require( "./server/states/restreaming.js" ).stop();
 			process.exit(1);
 		} , 2000 );
 	});
