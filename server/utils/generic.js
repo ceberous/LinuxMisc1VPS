@@ -74,12 +74,22 @@ function START_RESTREAM_LAUNCHER( wUserName ) {
 module.exports.startRestreamLauncher = START_RESTREAM_LAUNCHER;
 
 
-function RUN_COMMAND_GET_OUTPUT( wCommand ) {
+// function RUN_COMMAND_GET_OUTPUT( wCommand ) {
+// 	try {
+// 		console.log( wCommand );
+// 		var wEX1 = exec( wCommand , { silent:true , async: false });
+// 		if ( wEX1.stderr.length > 1 ) { console.log( "ERROR --> Could not Run Command" ); return null; }
+// 		return wEX1.stdout;
+// 	}
+// 	catch( error ) { console.log( error ); return( error ); }
+// }
+// module.exports.runCommandGetOutput = RUN_COMMAND_GET_OUTPUT;
+
+const cp = require( "child_process" );
+function RUN_COMMAND_GET_OUTPUT( wCommand , wArg1 ) {
 	try {
-		console.log( wCommand );
-		var wEX1 = exec( wCommand , { silent:true , async: false });
-		if ( wEX1.stderr.length > 1 ) { console.log( "ERROR --> Could not Run Command" ); return null; }
-		return wEX1.stdout;
+		const output = cp.spawnSync( wCommand , [ wArg1 ] , { encoding : "utf8" } );
+		return output.stdout;
 	}
 	catch( error ) { console.log( error ); return( error ); }
 }
