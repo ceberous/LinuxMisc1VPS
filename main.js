@@ -8,7 +8,7 @@ process.on( "uncaughtException" , function( err ) {
 });
 
 const port = process.env.PORT || 6969;
-//const ip = require("ip");
+const ip = require("ip");
 
 var app = localIP = server = wss = null;
 
@@ -16,8 +16,8 @@ var app = localIP = server = wss = null;
 
 	await require( "./server/redisManager.js" ).loadRedis();
 	
-	//app = require( "./server/EXPRESS/expressAPP.js" );
-	//server = require( "http" ).createServer( app );
+	app = require( "./server/express/expressAPP.js" );
+	server = require( "http" ).createServer( app );
 	//wss = new WebSocket.Server({ server });
 	// await require( "./server/websocketManager.js" ).initialize( port );
 	// wss.on( "connection" , require( "./server/websocketManager.js" ).onConnection ); 
@@ -27,20 +27,20 @@ var app = localIP = server = wss = null;
 
 	//await require( "./server/utils/twitch.js" ).getLiveUsers();
 
-	// server.listen( port , async function() {
-	// 	const localIP = ip.address();
-	// 	console.log( "\tServer Started on :" );
-	// 	console.log( "\thttp://" + localIP + ":" + port );
-	// 	console.log( "\t\t or" );
-	// 	console.log( "\thttp://localhost:" + port );
-	// });
+	server.listen( port , async function() {
+		const localIP = ip.address();
+		console.log( "\tServer Started on :" );
+		console.log( "\thttp://" + localIP + ":" + port );
+		console.log( "\t\t or" );
+		console.log( "\thttp://localhost:" + port );
+	});
 
 
 	process.on( "unhandledRejection" , async function( reason , p ) {
-	    //await require( "./server/discordManager.js" ).error( reason );
+	    await require( "./server/discordManager.js" ).error( reason );
 	});
 	process.on( "uncaughtException" , async function( err ) {
-	    //await require( "./server/discordManager.js" ).error( err );
+	    await require( "./server/discordManager.js" ).error( err );
 	});
 
 	process.on( "SIGINT" , async function () {

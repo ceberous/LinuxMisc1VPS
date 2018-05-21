@@ -58,7 +58,6 @@ function START_PROCESS( wName , wArg1 ) {
 }
 module.exports.startProcess = START_PROCESS;
 
-
 const RestreamLaunchFP = path.join( __dirname , "./restreamLauncher.js" );
 const ConfigFP = path.join( __dirname , ".." , "py_scripts" , "config.json" );
 function START_RESTREAM_LAUNCHER( wUserName ) {
@@ -73,3 +72,15 @@ function START_RESTREAM_LAUNCHER( wUserName ) {
 	catch( error ) { console.log( error ); return( error ); }
 }
 module.exports.startRestreamLauncher = START_RESTREAM_LAUNCHER;
+
+
+function RUN_COMMAND_GET_OUTPUT( wCommand ) {
+	try {
+		console.log( wCommand );
+		var wEX1 = exec( wCommand , { silent:true , async: false });
+		if ( wEX1.stderr.length > 1 ) { console.log( "ERROR --> Could not Run Command" ); return null; }
+		return wEX1.stdout;
+	}
+	catch( error ) { console.log( error ); return( error ); }
+}
+module.exports.runCommandGetOutput = RUN_COMMAND_GET_OUTPUT;
