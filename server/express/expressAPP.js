@@ -29,9 +29,9 @@ app.use(function(req, res, next) {
 
 
 // Main-Routes
-// app.get( "/" , function( req , res , next ) {
-// 	res.render( 'index.html' );
-// });
+app.get( "/" , function( req , res , next ) {
+	res.render( 'index.html' );
+});
 
 const transRoutes = require( "./routes/trans.js" );
 app.use( "/trans/" , transRoutes );
