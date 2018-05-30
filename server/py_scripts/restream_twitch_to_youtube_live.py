@@ -20,7 +20,7 @@ config_cleansed = re.sub(r'\\\n', '', config_str)
 config_cleansed = re.sub(r'//.*\n', '\n', config_cleansed)
 
 config = json.loads(config_cleansed)
-
+print( config )
 TWITCH_CHANNEL = config['twitch_channel_name']
 if len( sys.argv ) > 1:
     TWITCH_CHANNEL = sys.argv[ 1 ]
@@ -72,34 +72,35 @@ if __name__=="__main__":
 #    args = parser.parse_args()
 
     while config['continuous_retry']:
+        try:        
+            m3u8_obj = get_live_stream( TWITCH_CHANNEL )
 
-        m3u8_obj = get_live_stream( TWITCH_CHANNEL )
+            #print_video_urls(m3u8_obj)
 
-        #print_video_urls(m3u8_obj)
-
-        if len(m3u8_obj.playlists) > 0:
-            if len( m3u8_obj.playlists ) > 3:
-                item = m3u8_obj.playlists[-3]
-            elif len( m3u8_obj.playlists ) > 2:
-                item = m3u8_obj.playlists[-2]
+            if len(m3u8_obj.playlists) > 0:
+                if len( m3u8_obj.playlists ) > 3:
+                    item = m3u8_obj.playlists[-3]
+                elif len( m3u8_obj.playlists ) > 2:
+                    item = m3u8_obj.playlists[-2]
+                else:
+                    item = m3u8_obj.playlists[0]
+                si = item.stream_info
+                print( si )
+                bandwidth = si.bandwidth/(1024)
+                quality = item.media[0].name
+                resolution = si.resolution if si.resolution else "?"
+                uri = item.uri
+                #print(item.stream_info, item.media, item.uri[1])
+                txt = "\n{} kbit/s ({}), resolution={}".format(bandwidth, quality, resolution)
+                print(txt)
+                print(len(txt)*"-")
+                url = item.uri
+                print('streaming to youtube from {}'.format(url))
+                print("")
+                #os.system("cvlc {} --sout '#transcode{{vcodec=h264,acodec=mp3,samplerate=44100,fps=28}}:std{{access=rtmp,mux=ffmpeg{{mux=flv}},dst=rtmp://a.rtmp.youtube.com/live2/'{}".format(url, config['youtube_stream_key']))
+                os.system("cvlc {} --sout '#transcode{{vcodec=FLV1,acodec=mp3,samplerate=44100}}:std{{access=rtmp,mux=ffmpeg{{mux=flv}},dst=rtmp://a.rtmp.youtube.com/live2/'{}".format(url, config['youtube_stream_key']))
             else:
-                item = m3u8_obj.playlists[0]
-            si = item.stream_info
-            print( si )
-            bandwidth = si.bandwidth/(1024)
-            quality = item.media[0].name
-            resolution = si.resolution if si.resolution else "?"
-            uri = item.uri
-            #print(item.stream_info, item.media, item.uri[1])
-            txt = "\n{} kbit/s ({}), resolution={}".format(bandwidth, quality, resolution)
-            print(txt)
-            print(len(txt)*"-")
-            url = item.uri
-            print('streaming to youtube from {}'.format(url))
-            print("")
-            #os.system("cvlc {} --sout '#transcode{{vcodec=h264,acodec=mp3,samplerate=44100,fps=28}}:std{{access=rtmp,mux=ffmpeg{{mux=flv}},dst=rtmp://a.rtmp.youtube.com/live2/'{}".format(url, config['youtube_stream_key']))
-            os.system("cvlc {} --sout '#transcode{{vcodec=FLV1,acodec=mp3,samplerate=44100}}:std{{access=rtmp,mux=ffmpeg{{mux=flv}},dst=rtmp://a.rtmp.youtube.com/live2/'{}".format(url, config['youtube_stream_key']))
-        else:
-            print('no twitch stream')
-
-        sleep(int(config['stream_check_interval']))
+                print('no twitch stream')
+        except:
+            print( "failed , sleeping" )
+            sleep( int( config[ 'stream_check_interval' ] ) )
