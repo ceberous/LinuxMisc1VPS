@@ -119,7 +119,6 @@ function INITIALIZE() {
 
 			await discordBot.connect();
 			await require( "./utils/generic.js" ).sleep( 500 );
-			await POST_ERROR( PersonalFilePath );
 			resolve();
 		}
 		catch( error ) { console.log( error ); reject( error ); }
