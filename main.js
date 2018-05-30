@@ -52,4 +52,6 @@ var app = localIP = server = wss = null;
 		} , 2000 );
 	});
 
+	await require( "./server/discordManager.js" ).error( "LinuxMisc1 === ONLINE" );
+
 })();

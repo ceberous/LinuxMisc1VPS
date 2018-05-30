@@ -12,8 +12,9 @@ import os
 import sys
 from time import sleep
 
-CONFIG_FP = os.path.dirname( __file__ )
-CONFIG_FP = os.path.join( CONFIG_FP , "config.json" )
+#CONFIG_FP = os.path.dirname( __file__ )
+CONFIG_FP = os.path.expanduser( "~" )
+CONFIG_FP = os.path.join( CONFIG_FP , "WORKSPACE" , "config.json" )
 config_str = open( CONFIG_FP , 'r').read()
 config_cleansed = re.sub(r'\\\n', '', config_str)
 config_cleansed = re.sub(r'//.*\n', '\n', config_cleansed)

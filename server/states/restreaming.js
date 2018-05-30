@@ -4,7 +4,10 @@ const RC = require( "../constants/redis.js" );
 const SCRIPT_NAME = "restream_twitch_to_youtube_live.py";
 const MANUAL_PROCESS = "/usr/local/bin/startRestream";
 
-const YTPersonal = require( "../../personal.js" ).youtube;
+const path = require( "path" );
+const process = require( "process" );
+const PersonalFilePath = path.join( process.env.HOME , "WORKSPACE" , "personal_linux_misc_1.js" );
+const YTPersonal = require( PersonalFilePath ).youtube;
 const YTNormalBase = "https://www.youtube.com/watch?v=";
 const YTGamingBase = "https://gaming.youtube.com/watch?v=";
 

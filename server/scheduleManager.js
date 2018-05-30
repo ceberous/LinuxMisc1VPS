@@ -3,7 +3,10 @@ const schedule = require( "node-schedule" );
 const RU = require( "./utils/redis.js" );
 const RC = require( "./constants/redis.js" );
 
-const PreferredStreamer = require( "../personal.js" ).twitch.preferred_streamer;
+const path = require( "path" );
+const process = require( "process" );
+const PersonalFilePath = path.join( process.env.HOME , "WORKSPACE" , "personal_linux_misc_1.js" );
+const PreferredStreamer = require( PersonalFilePath ).twitch.preferred_streamer;
 const StartTwitchUser = require( "./states/restreaming.js" ).startUser;
 
 var twitch_update = null;

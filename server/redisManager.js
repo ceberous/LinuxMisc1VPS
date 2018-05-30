@@ -1,8 +1,11 @@
 const REDIS = require("redis");
+const path = require( "path" );
+const process = require( "process" );
+const PersonalFilePath = path.join( process.env.HOME , "WORKSPACE" , "personal_linux_misc_1.js" );
 function LOAD_REDIS() {
 	return new Promise( async function( resolve , reject ) {
 		try {
-			const R_INIT_CONFIG = require( "../personal.js" ).redis;
+			const R_INIT_CONFIG = require( PersonalFilePath ).redis;
 			redis = await REDIS.createClient({ 
 				host: R_INIT_CONFIG[ "CONNECTION" ][ "HOST" ] ,
 				port: R_INIT_CONFIG[ "CONNECTION" ][ "PORT" ] ,

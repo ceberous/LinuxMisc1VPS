@@ -1,3 +1,6 @@
+const path = require( "path" );
+const process = require( "process" );
+const PersonalFilePath = path.join( process.env.HOME , "WORKSPACE" , "personal_linux_misc_1.js" );
 const Eris = require("eris");
 var discordBot = null;
 var discordCreds = null;
@@ -55,7 +58,7 @@ module.exports.shutdown = SHUTDOWN;
 function INITIALIZE() {
 	return new Promise( async function( resolve , reject ) {
 		try {
-			discordCreds = require( "../personal.js" ).discord;
+			discordCreds = require( PersonalFilePath ).discord;
 			discordBot = new Eris( discordCreds.token );
 
 			discordBot.on( "messageCreate" , async ( msg ) => {

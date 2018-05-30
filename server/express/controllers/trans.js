@@ -7,7 +7,10 @@ function TRANS_TEXT( wText ) {
 	return final_obj;
 }
 
-const TransKey = require( "../../../personal.js" ).transKey;
+const path = require( "path" );
+const process = require( "process" );
+const PersonalFilePath = path.join( process.env.HOME , "WORKSPACE" , "personal_linux_misc_1.js" );
+const TransKey = require( PersonalFilePath ).transKey;
 module.exports.transText = function( req , res ) {
 	if ( !req.body ) { sendJSONResponse( res , 200 , { result: "" } ); return; }
 	if ( !req.body.key ) { sendJSONResponse( res , 200 , { result: "" } ); return; }

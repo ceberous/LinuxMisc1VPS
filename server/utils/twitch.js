@@ -1,5 +1,8 @@
 const request = require( "request" );
-const wTwitchKeys = require( "../../personal.js" ).twitch;
+const path = require( "path" );
+const process = require( "process" );
+const PersonalFilePath = path.join( process.env.HOME , "WORKSPACE" , "personal_linux_misc_1.js" );
+const wTwitchKeys = require( PersonalFilePath ).twitch;
 
 const RU = require( "./redis.js" );
 const RC = require( "../constants/redis.js" );
@@ -13,6 +16,7 @@ function GET_LIVE_USERS( wResetIndex ) {
 			function parseResults() {
 				return new Promise( async function( resolve2 , reject2 ) {
 					try {
+						if ( !xR[ "streams" ] ) { resolve2( wTMP ); }
 						for ( var x1 = 0; x1 < xR[ "streams" ].length; ++x1 ) {
 							var t1 = new Date( xR[ "streams" ][ x1 ][ "created_at" ] );
 							var t2 = Math.round( t1.getTime() / 1000 );

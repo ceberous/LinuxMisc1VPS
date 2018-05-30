@@ -1,6 +1,9 @@
 const request = require( "request" );
 const cheerio = require( "cheerio" );
-const Personal = require( "../../personal.js" ).youtube;
+const path = require( "path" );
+const process = require( "process" );
+const PersonalFilePath = path.join( process.env.HOME , "WORKSPACE" , "personal_linux_misc_1.js" );
+const Personal = require( PersonalFilePath ).youtube;
 const wURL = "https://www.youtube.com/channel/" + Personal.channel_id + "/videos?view=2&live_view=501&flow=grid";
 
 function GET_LIVE_VIDEOS() {
