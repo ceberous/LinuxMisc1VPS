@@ -66,7 +66,8 @@ function START_RESTREAM_LAUNCHER( wUserName ) {
 		config[ "twitch_channel_name" ] = wUserName;
 		fs.writeFileSync( ConfigFP , JSON.stringify( config ) , "utf8" );
 		var wEX1 = exec( "node " + RestreamLaunchFP , { silent:true , async: false });
-		if ( wEX1.stderr.length > 1 ) { console.log( "ERROR --> Could not Launch Restream" ); return null; }
+		if ( wEX1.stderr.length > 1 ) { require( "../discordManager.js" ).error( "ERROR --> Could not Launch Restream" ); return null; }
+		require( "../discordManager.js" ).post( "Launched Restream" , "error" );
 		console.log( "Launched Restream" );
 	}
 	catch( error ) { console.log( error ); return( error ); }
