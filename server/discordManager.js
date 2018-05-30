@@ -65,6 +65,12 @@ function INITIALIZE() {
 				
 				if ( msg[ "author" ][ "id" ] === discordCreds.bot_id ) { return; }
 
+				if ( msg.content.startsWith( "!restart" ) ) {
+					const output = await require( "./utils/generic.js" ).runCommandGetOutput( "pm2 restart LinuxMisc1" );
+					await POST_ID( output , msg.channel.id );
+					return;
+				}
+
 				// Restreaming Channel Messages
 				if ( msg.channel.id === discordCreds.channels.restreaming ) {
 					if ( msg.content.startsWith( "!stop" ) ) {
@@ -118,7 +124,7 @@ function INITIALIZE() {
 			});
 
 			await discordBot.connect();
-			await require( "./utils/generic.js" ).sleep( 500 );
+			await require( "./utils/generic.js" ).sleep( 1000 );
 			resolve();
 		}
 		catch( error ) { console.log( error ); reject( error ); }
