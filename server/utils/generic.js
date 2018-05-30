@@ -1,6 +1,7 @@
 require("shelljs/global");
 const fs = require( "fs" );
 const path = require("path");
+const process = require( "process" );
 const StringDecoder = require("string_decoder").StringDecoder;
 const decoder = new StringDecoder( "utf8" );
 const spawn = require("child_process").spawn;
@@ -59,10 +60,10 @@ function START_PROCESS( wName , wArg1 ) {
 module.exports.startProcess = START_PROCESS;
 
 const RestreamLaunchFP = path.join( __dirname , "./restreamLauncher.js" );
-const ConfigFP = path.join( __dirname , ".." , "py_scripts" , "config.json" );
+const ConfigFP = path.join( process.env.HOME , "WORKSPACE" , "config.json" );
 function START_RESTREAM_LAUNCHER( wUserName ) {
 	try {
-		var config = require( "../py_scripts/config.json" );
+		var config = require( ConfigFP );
 		config[ "twitch_channel_name" ] = wUserName;
 		fs.writeFileSync( ConfigFP , JSON.stringify( config ) , "utf8" );
 		var wEX1 = exec( "node " + RestreamLaunchFP , { silent:true , async: false });
