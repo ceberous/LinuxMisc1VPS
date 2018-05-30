@@ -66,8 +66,7 @@ function INITIALIZE() {
 				if ( msg[ "author" ][ "id" ] === discordCreds.bot_id ) { return; }
 
 				if ( msg.content.startsWith( "!restart" ) ) {
-					const output = await require( "./utils/generic.js" ).runCommandGetOutput( "pm2 restart LinuxMisc1" );
-					await POST_ID( output , msg.channel.id );
+					await require( "./utils/generic.js" ).restartPM2();
 					return;
 				}
 

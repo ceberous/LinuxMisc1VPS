@@ -67,8 +67,8 @@ function START_RESTREAM_LAUNCHER( wUserName ) {
 		config[ "twitch_channel_name" ] = wUserName;
 		fs.writeFileSync( ConfigFP , JSON.stringify( config ) , "utf8" );
 		var wEX1 = exec( "node " + RestreamLaunchFP , { silent:true , async: false });
-		if ( wEX1.stderr.length > 1 ) { require( "../discordManager.js" ).error( "ERROR --> Could not Launch Restream" ); return null; }
-		require( "../discordManager.js" ).post( "Launched Restream" , "error" );
+		if ( wEX1.stderr.length > 1 ) { require( "../discordManager.js" ).error( "Could not Launch Restream" ); return null; }
+		require( "../discordManager.js" ).post( "Launched Restream" , "log" );
 		console.log( "Launched Restream" );
 	}
 	catch( error ) { console.log( error ); return( error ); }
@@ -96,3 +96,14 @@ function RUN_COMMAND_GET_OUTPUT( wCommand , ...args ) {
 	catch( error ) { console.log( error ); return( error ); }
 }
 module.exports.runCommandGetOutput = RUN_COMMAND_GET_OUTPUT;
+
+
+function RESTART_PM2() {
+	return new Promise( function( resolve , reject ) {
+		try {
+			exec( "pm2 restartAll" , { silent: true , async: false } );
+		}
+		catch( error ) { console.log( error ); reject( error ); }
+	});
+}
+module.exports.restartPM2 = RESTART_PM2;
