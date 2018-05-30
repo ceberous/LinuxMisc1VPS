@@ -101,7 +101,7 @@ module.exports.runCommandGetOutput = RUN_COMMAND_GET_OUTPUT;
 function RESTART_PM2() {
 	return new Promise( function( resolve , reject ) {
 		try {
-			exec( "pm2 restartAll" , { silent: true , async: false } );
+			exec( "pm2 restart LinuxMisc1" , { silent: true , async: false } );
 		}
 		catch( error ) { console.log( error ); reject( error ); }
 	});
