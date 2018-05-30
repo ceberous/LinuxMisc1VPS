@@ -86,9 +86,9 @@ module.exports.startRestreamLauncher = START_RESTREAM_LAUNCHER;
 // module.exports.runCommandGetOutput = RUN_COMMAND_GET_OUTPUT;
 
 const cp = require( "child_process" );
-function RUN_COMMAND_GET_OUTPUT( wCommand , wArg1 ) {
+function RUN_COMMAND_GET_OUTPUT( wCommand , ...args ) {
 	try {
-		const output = cp.spawnSync( wCommand , [ wArg1 ] , { encoding : "utf8" } );
+		const output = cp.spawnSync( wCommand , args , { encoding : "utf8" } );
 		return output.stdout;
 	}
 	catch( error ) { console.log( error ); return( error ); }
