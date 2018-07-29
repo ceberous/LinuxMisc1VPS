@@ -1,5 +1,6 @@
 const express = require( "express" );
 const path = require( "path" );
+const process = require( "process" );
 const bodyParser = require( "body-parser" );
 const ejs = require( "ejs" );
 
@@ -38,5 +39,42 @@ app.use( "/trans/" , transRoutes );
 
 // const specialRoutes = require( "./routes/special.js" );
 // app.use( "/special/" , specialRoutes );
+
+const PersonalFilePath = path.join( process.env.HOME , "WORKSPACE" , "personal_linux_misc_1.js" );
+const twilio_creds = require( PersonalFilePath ).twilio_creds;
+const ckey = require( PersonalFilePath ).ckey;
+const ckey_length = require( PersonalFilePath ).ckey_length;
+app.get( "/twiliovtoken" , function( req , res ) {
+	
+	if ( !req.body.ckey ) { sendJSONResponse( res , 200 , { result: "" } ); return; }
+	if ( req.body.ckey.length !== ckey_length ) { sendJSONResponse( res , 200 , { result: "" } ); return; }
+	if ( req.body.ckey !== ckey ) { sendJSONResponse( res , 200 , { result: "" } ); return; }
+
+	//var identity = randomName();
+	var identity = twilio_creds.groupVideo3.identity;
+	
+	// Create an access token which we will sign and return to the client,
+	// containing the grant we just created.
+	var token = new AccessToken(
+		twilio_creds.ACCOUNT_SID ,
+		twilio_creds.groupVideo3.API_KEY ,
+		twilio_creds.groupVideo3.API_SECRET
+	);
+
+	// Assign the generated identity to the token.
+	token.identity = identity;
+
+	// Grant the access token Twilio Video capabilities.
+	var grant = new VideoGrant();
+	token.addGrant( grant );
+
+	// Serialize the token to a JWT string and include it in a JSON response.
+	res.send({
+		identity: identity,
+		token: token.toJwt()
+	});
+
+});
+
 
 module.exports = app;
