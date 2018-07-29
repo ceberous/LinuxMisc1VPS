@@ -12,7 +12,7 @@ const ip = require("ip");
 const WebSocket = require( "ws" );
 //const tmi = require( "tmi.js" );
 
-const TwitchMusicBotCreds = require( "./personal.js" ).twitch_music_bot;
+//const TwitchMusicBotCreds = require( "./personal.js" ).twitch_music_bot;
 var twitchIRCClient = undefined;
 var LatestID = "dQw4w9WgXcQ";
 
