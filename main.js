@@ -35,13 +35,13 @@ var app = localIP = server = wss = null;
 	app = require( "./server/express/expressAPP.js" );
 	server = require( "http" ).createServer( app );
 	wss = new WebSocket.Server({ server });
-	await require( "./server/websocketManager.js" ).initialize( port );
-	wss.on( "connection" , function( message ){
-		if ( wMSG !== LatestID ) {
-			LatestID = wMSG;
-			console.log( "Updated LatestID to --> " + LatestID );
-		}		
-	}); 
+	// await require( "./server/websocketManager.js" ).initialize( port );
+	// wss.on( "connection" , function( message ){
+	// 	if ( wMSG !== LatestID ) {
+	// 		LatestID = wMSG;
+	// 		console.log( "Updated LatestID to --> " + LatestID );
+	// 	}		
+	// }); 
 
 	await require( "./server/discordManager.js" ).initialize();
 	require( "./server/scheduleManager.js" ).initialize();
