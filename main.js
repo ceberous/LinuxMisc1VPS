@@ -10,7 +10,7 @@ process.on( "uncaughtException" , function( err ) {
 const port = process.env.PORT || 6969;
 const ip = require("ip");
 const WebSocket = require( "ws" );
-const tmi = require( "tmi.js" );
+//const tmi = require( "tmi.js" );
 
 const TwitchMusicBotCreds = require( "./personal.js" ).twitch_music_bot;
 var twitchIRCClient = undefined;
