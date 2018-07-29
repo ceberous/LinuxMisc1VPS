@@ -46,7 +46,7 @@ const PersonalFilePath = path.join( process.env.HOME , "WORKSPACE" , "personal_l
 const twilio_creds = require( PersonalFilePath ).twilio_creds;
 const ckey = require( PersonalFilePath ).ckey;
 const ckey_length = require( PersonalFilePath ).ckey_length;
-app.get( "/twiliovtoken" , function( req , res ) {
+app.post( "/twiliovtoken" , function( req , res ) {
 	
 	if ( !req.body.ckey ) { sendJSONResponse( res , 200 , { result: "" } ); return; }
 	if ( req.body.ckey.length !== ckey_length ) { sendJSONResponse( res , 200 , { result: "" } ); return; }
