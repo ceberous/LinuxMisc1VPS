@@ -50,6 +50,12 @@ const ckey = require( PersonalFilePath ).ckey;
 const ckey_length = require( PersonalFilePath ).ckey_length;
 app.post( "/twiliovtoken" , function( req , res ) {
 	
+	console.log( req.body.ckey );
+	console.log( ckey );
+
+	console.log( req.body.ckey.length.toString() );
+	console.log( ckey.length.toString() );
+
 	if ( !req.body.ckey ) { console.log( "No CKEY" ); sendJSONResponse( res , 200 , { result: "" } ); return; }
 	if ( req.body.ckey.length !== ckey_length ) { console.log( "CKEY Length === " + req.body.ckey.length.toString() ); sendJSONResponse( res , 200 , { result: "" } ); return; }
 	if ( req.body.ckey !== ckey ) { console.log( "CKEY Sent === " + req.body.ckey ); console.log( "CKEY ===" + ckey );  sendJSONResponse( res , 200 , { result: "" } ); return; }
