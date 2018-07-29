@@ -8,6 +8,8 @@ const app = express();
 const server = require( "http" ).createServer( app );
 const port = process.env.PORT || 6969;
 
+function sendJSONResponse( res , status , content ) { if ( status ) { res.status( status ); } res.json( content ); }
+
 // View Engine Setup
 app.set( "views" , path.join( __dirname , "../../client" , "views" ) );
 app.set( "view engine" , "ejs" );
