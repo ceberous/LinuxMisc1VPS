@@ -40,6 +40,8 @@ app.use( "/trans/" , transRoutes );
 // const specialRoutes = require( "./routes/special.js" );
 // app.use( "/special/" , specialRoutes );
 
+const AccessToken = require( "twilio" ).jwt.AccessToken;
+const VideoGrant = AccessToken.VideoGrant;
 const PersonalFilePath = path.join( process.env.HOME , "WORKSPACE" , "personal_linux_misc_1.js" );
 const twilio_creds = require( PersonalFilePath ).twilio_creds;
 const ckey = require( PersonalFilePath ).ckey;
