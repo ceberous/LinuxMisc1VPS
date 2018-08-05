@@ -88,7 +88,7 @@ app.post( "/twiliocall" , function( req , res ) {
 	// if ( req.body.ckey !== ckey ) { console.log( "CKEY Sent === " + req.body.ckey ); console.log( "CKEY ===" + ckey );  sendJSONResponse( res , 200 , { result: "" } ); return; }
 
 	const twiml = new VoiceResponse();
-    twiml.say( "This Is a Call Alert Test" );
+    twiml.say( "Haley is Definately Awake" );
 	res.writeHead( 200 , { "Content-Type": "text/xml" });
 	res.end( twiml.toString() );
 
