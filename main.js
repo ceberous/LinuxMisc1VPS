@@ -34,7 +34,7 @@ var app = localIP = server = wss = null;
 	
 	app = require( "./server/express/expressAPP.js" );
 	server = require( "http" ).createServer( app );
-	wss = new WebSocket.Server({ server });
+	// wss = new WebSocket.Server({ server });
 	// await require( "./server/websocketManager.js" ).initialize( port );
 	// wss.on( "connection" , function( message ){
 	// 	if ( wMSG !== LatestID ) {

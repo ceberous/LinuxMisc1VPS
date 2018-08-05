@@ -49,12 +49,6 @@ const twilio_creds = require( PersonalFilePath ).twilio_creds;
 const ckey = require( PersonalFilePath ).ckey;
 const ckey_length = require( PersonalFilePath ).ckey_length;
 app.post( "/twiliovtoken" , function( req , res ) {
-	
-	console.log( req.body.ckey );
-	console.log( ckey );
-
-	console.log( req.body.ckey.length.toString() );
-	console.log( ckey.length.toString() );
 
 	if ( !req.body.ckey ) { console.log( "No CKEY" ); sendJSONResponse( res , 200 , { result: "" } ); return; }
 	if ( req.body.ckey.length !== ckey_length ) { console.log( "CKEY Length === " + req.body.ckey.length.toString() ); sendJSONResponse( res , 200 , { result: "" } ); return; }
@@ -72,7 +66,7 @@ app.post( "/twiliovtoken" , function( req , res ) {
 	);
 
 	// Assign the generated identity to the token.
-	token.identity = identity;
+	token.identity =  Math.random().toString( 36 ).substring( 7 );
 
 	// Grant the access token Twilio Video capabilities.
 	var grant = new VideoGrant();
@@ -83,6 +77,20 @@ app.post( "/twiliovtoken" , function( req , res ) {
 		identity: identity,
 		token: token.toJwt()
 	});
+
+});
+
+const VoiceResponse = require( "twilio" ).twiml.VoiceResponse;
+app.post( "/twiliocall" , function( req , res ) {
+
+	// if ( !req.body.ckey ) { console.log( "No CKEY" ); sendJSONResponse( res , 200 , { result: "" } ); return; }
+	// if ( req.body.ckey.length !== ckey_length ) { console.log( "CKEY Length === " + req.body.ckey.length.toString() ); sendJSONResponse( res , 200 , { result: "" } ); return; }
+	// if ( req.body.ckey !== ckey ) { console.log( "CKEY Sent === " + req.body.ckey ); console.log( "CKEY ===" + ckey );  sendJSONResponse( res , 200 , { result: "" } ); return; }
+
+	const twiml = new VoiceResponse();
+    twiml.say( "This Is a Call Alert Test" );
+	res.writeHead( 200 , { "Content-Type': 'text/xml" });
+	res.end( twiml.toString() );
 
 });
 
