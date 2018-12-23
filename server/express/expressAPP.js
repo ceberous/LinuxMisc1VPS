@@ -8,6 +8,8 @@ const app = express();
 const server = require( "http" ).createServer( app );
 const port = process.env.PORT || 6969;
 
+const personal = require( "../../personal.js" );
+
 function sendJSONResponse( res , status , content ) { if ( status ) { res.status( status ); } res.json( content ); }
 
 // View Engine Setup
@@ -94,11 +96,11 @@ app.post( "/twiliocall" , function( req , res ) {
 
 });
 
-const hosted_mp3_url = "https://www.dropbox.com/s/gej1r9n4sfmu8k6/unbirthday.mp3?dl=1";
+
 app.post( "/twiliobirthdaycall" , function( req , res ) {
 
 	const twiml = new VoiceResponse();
-	twiml.play( { loop: 1 } , hosted_mp3_url );
+	twiml.play( { loop: 1 } , personal.twilio.calls.birthday.play_url );
 	res.writeHead( 200 , { "Content-Type": "text/xml" });
 	res.end( twiml.toString() );
 
