@@ -106,4 +106,17 @@ app.post( "/twiliobirthdaycall" , function( req , res ) {
 
 });
 
+
+app.get( "/rainguage" , function( req , res ) {
+
+
+	console.log( req );
+	console.log( req.params );
+	console.log( req.query );
+	console.log( req.body );
+
+	sendJSONResponse( res , 200 , { result: "10 inches" } );
+
+});
+
 module.exports = app;
