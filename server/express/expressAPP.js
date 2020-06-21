@@ -3,6 +3,7 @@ const path = require( "path" );
 const process = require( "process" );
 const bodyParser = require( "body-parser" );
 const ejs = require( "ejs" );
+const request = require( "request" );
 
 const app = express();
 const server = require( "http" ).createServer( app );
@@ -11,6 +12,7 @@ const port = process.env.PORT || 6969;
 const personal = require( "../../personal.js" );
 
 function sendJSONResponse( res , status , content ) { if ( status ) { res.status( status ); } res.json( content ); }
+
 
 // View Engine Setup
 app.set( "views" , path.join( __dirname , "../../client" , "views" ) );
@@ -138,7 +140,11 @@ app.post( "/radar" , function( req , res ) {
 	if ( req["headers"]["key"] === personal.radarKey ) {
 		console.log( personal.radarKey );
 		console.log( "ok , we need to send message to raspi via ssh tunnel to open radar on tv" );
-		sendJSONResponse( res , 200 , { 'fulfillmentText': "ok, opening radar on tv" } );
+
+		request.get( 'http://localhost:9003/radar' , function( radar_err , radar_res , radar_body ) {
+			sendJSONResponse( res , 200 , { 'fulfillmentText': "ok, opening radar on tv" } );
+		});
+
 	}
 	else {
 		sendJSONResponse( res , 200 , { 'fulfillmentText': "love siento" } );
