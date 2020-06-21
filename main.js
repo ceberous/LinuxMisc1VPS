@@ -16,14 +16,14 @@ const WebSocket = require( "ws" );
 var twitchIRCClient = undefined;
 var LatestID = "dQw4w9WgXcQ";
 
-function twitch_say( wMessage ) { 
+function twitch_say( wMessage ) {
     return new Promise( async function( resolve , reject ) {
         try {
             await twitchIRCClient.say( TwitchMusicBotCreds.channel , wMessage );
             resolve();
         }
         catch( error ) { console.log( error ); reject( error ); }
-     }); 
+     });
 }
 
 var app = localIP = server = wss = null;
@@ -31,7 +31,7 @@ var app = localIP = server = wss = null;
 ( async ()=> {
 
 	await require( "./server/redisManager.js" ).loadRedis();
-	
+
 	app = require( "./server/express/expressAPP.js" );
 	server = require( "http" ).createServer( app );
 	// wss = new WebSocket.Server({ server });
@@ -40,8 +40,8 @@ var app = localIP = server = wss = null;
 	// 	if ( wMSG !== LatestID ) {
 	// 		LatestID = wMSG;
 	// 		console.log( "Updated LatestID to --> " + LatestID );
-	// 	}		
-	// }); 
+	// 	}
+	// });
 
 	await require( "./server/discordManager.js" ).initialize();
 	require( "./server/scheduleManager.js" ).initialize();

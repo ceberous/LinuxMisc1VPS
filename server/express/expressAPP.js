@@ -135,7 +135,8 @@ app.post( "/radar" , function( req , res ) {
 	// console.log( req.query );
 	// console.log( req.body );
 
-	if ( req["headers"]["key"] === "2e97595883e08a6a332ec560c68356b319231599fe6ee3ecbbbf9753fb2a1888" ) {
+	if ( req["headers"]["key"] === personal.radarKey ) {
+		console.log( personal.radarKey );
 		console.log( "ok , we need to send message to raspi via ssh tunnel to open radar on tv" );
 		sendJSONResponse( res , 200 , { 'fulfillmentText': "ok, opening radar on tv" } );
 	}
