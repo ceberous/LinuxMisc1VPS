@@ -96,6 +96,14 @@ app.post( "/twiliocall" , function( req , res ) {
 
 });
 
+app.post( "/twiliocallwater" , function( req , res ) {
+
+	const twiml = new VoiceResponse();
+	twiml.say( "Haley Needs a Drink of Water" );
+	res.writeHead( 200 , { "Content-Type": "text/xml" });
+	res.end( twiml.toString() );
+
+});
 
 app.post( "/twiliobirthdaycall" , function( req , res ) {
 
