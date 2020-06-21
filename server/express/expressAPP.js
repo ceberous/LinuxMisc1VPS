@@ -127,7 +127,7 @@ app.get( "/rainguage" , function( req , res ) {
 
 });
 
-app.get( "/radar" , function( req , res ) {
+app.post( "/radar" , function( req , res ) {
 
 
 	console.log( req );
