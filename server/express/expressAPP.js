@@ -127,4 +127,16 @@ app.get( "/rainguage" , function( req , res ) {
 
 });
 
+app.get( "/radar" , function( req , res ) {
+
+
+	console.log( req );
+	console.log( req.params );
+	console.log( req.query );
+	console.log( req.body );
+
+	sendJSONResponse( res , 200 , { 'fulfillmentText': "ok, opening radar on tv" } );
+
+});
+
 module.exports = app;
