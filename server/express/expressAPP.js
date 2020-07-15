@@ -147,9 +147,9 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 		// 	let secondary_level = Object.keys( req[ top_level_keys[ i ] ] );
 		// 	console.log( secondary_level );
 		// }
-		console.log( res.body );
-		console.log( res.body["AddOns"] );
-		console.log( JSON.parse( res.body["AddOns"] ) );
+		console.log( req.body );
+		console.log( req.body["AddOns"] );
+		console.log( JSON.parse( req.body["AddOns"] ) );
 		// if ( caller_info ) {
 		// 	if ( caller_info["carrier"] ) {
 		// 		if ( caller_info["carrier"]["type"] ) {
