@@ -157,7 +157,9 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									response.dial( personal.twilio_creds.forward_phone_number , {
 										hangupOnStar: "true"
 									});
-									console.log( response );
+									//console.log( response );
+									res.set('Content-Type', 'text/xml');
+									return res.send( response.toString() );
 									success = true;
 								}
 							}
