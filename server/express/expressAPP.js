@@ -140,11 +140,11 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 	let success = false;
 	try {
 		//let caller_info = await TwilioLookupNumber( res.phone_number );
-		console.log( res );
-		let top_level_keys = Object.keys( res );
+		console.log( req );
+		let top_level_keys = Object.keys( req );
 		console.log( top_level_keys );
 		for ( let i = 0 ; i < top_level_keys.length ; ++i ) {
-			let secondary_level = Object.keys( res[ top_level_keys[ i ] ] );
+			let secondary_level = Object.keys( req[ top_level_keys[ i ] ] );
 			console.log( secondary_level );
 		}
 		// console.log( res.body );
