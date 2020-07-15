@@ -135,23 +135,24 @@ app.post( "/twiliobirthdaycall" , function( req , res ) {
 
 });
 
+// https://www.twilio.com/console/lookup
 app.post( "/twiliocallsanitizer" , async function( req , res ) {
 	let success = false;
 	try {
-		let caller_info = await TwilioLookupNumber( response.phone_number );
+		//let caller_info = await TwilioLookupNumber( res.phone_number );
 		console.log( caller_info );
-		if ( caller_info ) {
-			if ( caller_info["carrier"] ) {
-				if ( caller_info["carrier"]["type"] ) {
-					if ( caller_info["carrier"]["type"] !== "voip" ) {
-						res.dial( personal.twilio_creds.forward_phone_number );
-						console.log( "Its a real non-voip call!" );
-						console.log( response );
-						success = true;
-					}
-				}
-			}
-		}
+		// if ( caller_info ) {
+		// 	if ( caller_info["carrier"] ) {
+		// 		if ( caller_info["carrier"]["type"] ) {
+		// 			if ( caller_info["carrier"]["type"] !== "voip" ) {
+		// 				res.dial( personal.twilio_creds.forward_phone_number );
+		// 				console.log( "Its a real non-voip call!" );
+		// 				console.log( response );
+		// 				success = true;
+		// 			}
+		// 		}
+		// 	}
+		// }
 	}
 	catch( e ) { console.log( e ); }
 	if ( !success ) {

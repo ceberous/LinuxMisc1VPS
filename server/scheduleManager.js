@@ -38,7 +38,7 @@ async function TWITCH_UPDATE() {
 					}
 				}
 			}
-		}	
+		}
 		console.log( "Done with Twitch Live User Update JOB" );
 	}
 	catch( error ) { console.log( error ); return( error ); }
@@ -46,8 +46,8 @@ async function TWITCH_UPDATE() {
 
 function INITIALIZE() {
 	RU.delKey( RC.RESTREAMING.ACTIVE );
-	twitch_update =  schedule.scheduleJob( "*/5 * * * *" , function() {
-		TWITCH_UPDATE();
-	});
+	// twitch_update =  schedule.scheduleJob( "*/5 * * * *" , function() {
+	// 	TWITCH_UPDATE();
+	// });
 }
 module.exports.initialize = INITIALIZE;
