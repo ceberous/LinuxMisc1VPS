@@ -154,12 +154,12 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									console.log( personal.twilio_creds.forward_phone_number );
 									console.log( "Its a real non-voip call!" );
 									const response = new twilio.twiml.VoiceResponse();
-									response.say( "Connecting" );
+									//response.say( "Connecting" );
 									response.dial( personal.twilio_creds.forward_phone_number , {
 										//hangupOnStar: "true"
 									});
 									//console.log( response );
-									res.set('Content-Type', 'text/xml');
+									//res.set('Content-Type', 'text/xml');
 									return res.send( response.toString() );
 									success = true;
 								}
