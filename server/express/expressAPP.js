@@ -135,6 +135,16 @@ app.post( "/twiliobirthdaycall" , function( req , res ) {
 
 });
 
+
+app.post( "/twiliocallsanitizerhangup" , function( req , res ) {
+	const response = new twilio.twiml.VoiceResponse();
+	// response.say("Thank you for using Call Congress! " +
+	// "Your voice makes a difference. Goodbye.");
+	response.hangup();
+	res.set('Content-Type', 'text/xml');
+	res.send(response.toString());
+});
+
 // https://www.twilio.com/console/lookup
 app.post( "/twiliocallsanitizer" , async function( req , res ) {
 	let success = false;
@@ -156,10 +166,12 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									const response = new twilio.twiml.VoiceResponse();
 									//response.say( "Connecting" );
 									response.dial( personal.twilio_creds.forward_phone_number , {
-										//hangupOnStar: "true"
+										//hangupOnStar: "true" ,
+										//action: '/twiliocallsanitizerhangup'
 									});
 									//console.log( response );
 									//res.set('Content-Type', 'text/xml');
+									response.hangup();
 									return res.send( response.toString() );
 									success = true;
 								}
