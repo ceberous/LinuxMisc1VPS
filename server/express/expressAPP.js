@@ -141,10 +141,7 @@ app.post( "/twiliocallsanitizerconfrence" , function( req , res ) {
 	try {
 		const response = new twilio.twiml.VoiceResponse();
 		response.say( "Forwarding" );
-		response.dial( personal.twilio_creds.forward_phone_number , {
-			//hangupOnStar: "true" ,
-			//action: '/twiliocallsanitizerhangup'
-		});
+		response.confrence( personal.twilio_creds.forward_phone_number );
 		//console.log( response );
 		res.set('Content-Type', 'text/xml');
 		//response.hangup();
@@ -186,7 +183,7 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									});
 									//console.log( response );
 									res.set('Content-Type', 'text/xml');
-									response.hangup();
+									//response.hangup();
 									return res.send( response.toString() );
 									success = true;
 								}
