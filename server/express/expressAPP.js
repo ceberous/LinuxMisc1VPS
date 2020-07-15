@@ -136,13 +136,28 @@ app.post( "/twiliobirthdaycall" , function( req , res ) {
 });
 
 
-app.post( "/twiliocallsanitizerhangup" , function( req , res ) {
-	const response = new twilio.twiml.VoiceResponse();
-	// response.say("Thank you for using Call Congress! " +
-	// "Your voice makes a difference. Goodbye.");
-	response.hangup();
-	res.set('Content-Type', 'text/xml');
-	res.send(response.toString());
+app.post( "/twiliocallsanitizerconfrence" , function( req , res ) {
+	let success = false;
+	try {
+		const response = new twilio.twiml.VoiceResponse();
+		//response.say( "Connecting" );
+		response.dial( personal.twilio_creds.forward_phone_number , {
+			//hangupOnStar: "true" ,
+			//action: '/twiliocallsanitizerhangup'
+		});
+		//console.log( response );
+		res.set('Content-Type', 'text/xml');
+		response.hangup();
+		return res.send( response.toString() );
+		success = true;
+	}
+	catch( e ) { console.log( e ); }
+	if ( !success ) {
+		const twiml = new twilio.twiml.VoiceResponse();
+		twiml.say( "wadu" );
+		res.writeHead( 200 , { "Content-Type": "text/xml" });
+		res.end( twiml.toString() );
+	}
 });
 
 // https://www.twilio.com/console/lookup
@@ -165,12 +180,12 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									console.log( "Its a real non-voip call!" );
 									const response = new twilio.twiml.VoiceResponse();
 									//response.say( "Connecting" );
-									response.dial( personal.twilio_creds.forward_phone_number , {
+									response.dial( personal.twilio_creds.conference_pivot_number , {
 										//hangupOnStar: "true" ,
 										//action: '/twiliocallsanitizerhangup'
 									});
 									//console.log( response );
-									//res.set('Content-Type', 'text/xml');
+									res.set('Content-Type', 'text/xml');
 									response.hangup();
 									return res.send( response.toString() );
 									success = true;
