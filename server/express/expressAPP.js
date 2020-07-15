@@ -147,7 +147,7 @@ app.post( "/twiliocallsanitizerconfrence" , function( req , res ) {
 		});
 		//console.log( response );
 		res.set('Content-Type', 'text/xml');
-		response.hangup();
+		//response.hangup();
 		return res.send( response.toString() );
 		success = true;
 	}
