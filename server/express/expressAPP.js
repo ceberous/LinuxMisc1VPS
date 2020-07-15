@@ -11,8 +11,28 @@ const port = process.env.PORT || 6969;
 
 const personal = require( "../../personal.js" );
 
+const twilio = require( "twilio" );
+
 function sendJSONResponse( res , status , content ) { if ( status ) { res.status( status ); } res.json( content ); }
 
+// https://www.twilio.com/docs/lookup/tutorials/carrier-and-caller-name
+function TwilioLookupNumber( phone_number ) {
+	return new Promise( function( resolve , reject ) {
+		try {
+			let twilio_client = require( "twilio" )( personal.twilio_creds.ACCOUNT_SID , personal.twilio_creds.AUTH_TOKEN );
+			twilio_client.lookups.phoneNumbers( phone_number )
+			.fetch({
+				type: ['carrier']
+			})
+			.then( number_info => {
+				console.log( number_info.carrier );
+				resolve( number_info );
+				return;
+			});
+		}
+		catch( error ) { console.log( error ); reject( error ); return; }
+	});
+}
 
 // View Engine Setup
 app.set( "views" , path.join( __dirname , "../../client" , "views" ) );
@@ -84,14 +104,13 @@ app.post( "/twiliovtoken" , function( req , res ) {
 
 });
 
-const VoiceResponse = require( "twilio" ).twiml.VoiceResponse;
 app.post( "/twiliocall" , function( req , res ) {
 
 	// if ( !req.body.ckey ) { console.log( "No CKEY" ); sendJSONResponse( res , 200 , { result: "" } ); return; }
 	// if ( req.body.ckey.length !== ckey_length ) { console.log( "CKEY Length === " + req.body.ckey.length.toString() ); sendJSONResponse( res , 200 , { result: "" } ); return; }
 	// if ( req.body.ckey !== ckey ) { console.log( "CKEY Sent === " + req.body.ckey ); console.log( "CKEY ===" + ckey );  sendJSONResponse( res , 200 , { result: "" } ); return; }
 
-	const twiml = new VoiceResponse();
+	const twiml = new twilio.twiml.VoiceResponse();
 	twiml.say( "Haley is Awake , Haley is Awake , Haley is Awake" );
 	res.writeHead( 200 , { "Content-Type": "text/xml" });
 	res.end( twiml.toString() );
@@ -100,8 +119,8 @@ app.post( "/twiliocall" , function( req , res ) {
 
 app.post( "/twiliocallwater" , function( req , res ) {
 
-	const twiml = new VoiceResponse();
-	twiml.say( "Haley Needs a Drink of Water , Haley Needs a Drink of Water" );
+	const twiml = new twilio.twiml.VoiceResponse();
+	twiml.say( "Haley Needs a Drink of Water , Haley Needs a Drink of Water , Haley Needs a Drink of Water" );
 	res.writeHead( 200 , { "Content-Type": "text/xml" });
 	res.end( twiml.toString() );
 
@@ -109,13 +128,39 @@ app.post( "/twiliocallwater" , function( req , res ) {
 
 app.post( "/twiliobirthdaycall" , function( req , res ) {
 
-	const twiml = new VoiceResponse();
+	const twiml = new twilio.twiml.VoiceResponse();
 	twiml.play( { loop: 1 } , personal.twilio.calls.birthday.play_url );
 	res.writeHead( 200 , { "Content-Type": "text/xml" });
 	res.end( twiml.toString() );
 
 });
 
+app.post( "/twiliocallsanitizer" , async function( req , res ) {
+	let success = false;
+	try {
+		let caller_info = await TwilioLookupNumber( response.phone_number );
+		console.log( caller_info );
+		if ( caller_info ) {
+			if ( caller_info["carrier"] ) {
+				if ( caller_info["carrier"]["type"] ) {
+					if ( caller_info["carrier"]["type"] !== "voip" ) {
+						res.dial( personal.twilio_creds.forward_phone_number );
+						console.log( "Its a real non-voip call!" );
+						console.log( response );
+						success = true;
+					}
+				}
+			}
+		}
+	}
+	catch( e ) { console.log( e ); }
+	if ( !success ) {
+		const twiml = new twilio.twiml.VoiceResponse();
+		twiml.say( "wadu" );
+		res.writeHead( 200 , { "Content-Type": "text/xml" });
+		res.end( twiml.toString() );
+	}
+});
 
 app.get( "/rainguage" , function( req , res ) {
 
