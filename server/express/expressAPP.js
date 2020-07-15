@@ -139,32 +139,28 @@ app.post( "/twiliobirthdaycall" , function( req , res ) {
 app.post( "/twiliocallsanitizer" , async function( req , res ) {
 	let success = false;
 	try {
-		//let caller_info = await TwilioLookupNumber( res.phone_number );
-		console.log( req );
-		// let top_level_keys = Object.keys( req );
-		// console.log( top_level_keys );
-		// for ( let i = 0 ; i < top_level_keys.length ; ++i ) {
-		// 	let secondary_level = Object.keys( req[ top_level_keys[ i ] ] );
-		// 	console.log( secondary_level );
-		// }
-		//console.log( req.body );
-		//console.log( req.body["AddOns"] );
 		let addons = JSON.parse( req.body["AddOns"] );
-		console.log( addons );
-		let carrier_type = addons["results"]["twilio_carrier_info"]["result"]["carrier"]["type"];
-		console.log( carrier_type );
-		// if ( caller_info ) {
-		// 	if ( caller_info["carrier"] ) {
-		// 		if ( caller_info["carrier"]["type"] ) {
-		// 			if ( caller_info["carrier"]["type"] !== "voip" ) {
-		// 				res.dial( personal.twilio_creds.forward_phone_number );
-		// 				console.log( "Its a real non-voip call!" );
-		// 				console.log( response );
-		// 				success = true;
-		// 			}
-		// 		}
-		// 	}
-		// }
+		// console.log( addons );
+		if ( addons ) {
+			if ( addons["results"] ) {
+				if ( addons["results"]["twilio_carrier_info"] ) {
+					if ( addons["results"]["twilio_carrier_info"]["result"] ) {
+						if ( addons["results"]["twilio_carrier_info"]["result"]["carrier"] ) {
+							let carrier_type = addons["results"]["twilio_carrier_info"]["result"]["carrier"]["type"];
+							if ( carrier_type ) {
+								if ( carrier_type !== "voip" ) {
+									console.log( carrier_type );
+									res.dial( personal.twilio_creds.forward_phone_number );
+									console.log( "Its a real non-voip call!" );
+									console.log( response );
+									success = true;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	catch( e ) { console.log( e ); }
 	if ( !success ) {
