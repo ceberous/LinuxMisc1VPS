@@ -150,7 +150,8 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 							if ( carrier_type ) {
 								if ( carrier_type !== "voip" ) {
 									console.log( carrier_type );
-									res.dial( personal.twilio_creds.forward_phone_number );
+									const response = new twilio.twiml.VoiceResponse();
+									response.dial( personal.twilio_creds.forward_phone_number );
 									console.log( "Its a real non-voip call!" );
 									console.log( response );
 									success = true;
