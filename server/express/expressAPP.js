@@ -140,7 +140,7 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 	let success = false;
 	try {
 		//let caller_info = await TwilioLookupNumber( res.phone_number );
-		console.log( caller_info );
+		console.log( res );
 		// if ( caller_info ) {
 		// 	if ( caller_info["carrier"] ) {
 		// 		if ( caller_info["carrier"]["type"] ) {
