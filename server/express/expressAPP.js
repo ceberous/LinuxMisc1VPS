@@ -151,7 +151,7 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 		//console.log( req.body["AddOns"] );
 		let addons = JSON.parse( req.body["AddOns"] );
 		console.log( addons );
-		let carrier_type = addons["status"]["results"]["twilio_carrier_info"]["result"]["carrier"]["type"];
+		let carrier_type = addons["results"]["twilio_carrier_info"]["result"]["carrier"]["type"];
 		console.log( carrier_type );
 		// if ( caller_info ) {
 		// 	if ( caller_info["carrier"] ) {
