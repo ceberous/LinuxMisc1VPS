@@ -140,7 +140,7 @@ app.post( "/twiliocallsanitizerconfrence" , function( req , res ) {
 	let success = false;
 	try {
 		const response = new twilio.twiml.VoiceResponse();
-		//response.say( "Connecting" );
+		response.say( "Forwarding" );
 		response.dial( personal.twilio_creds.forward_phone_number , {
 			//hangupOnStar: "true" ,
 			//action: '/twiliocallsanitizerhangup'
@@ -174,12 +174,12 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 							let carrier_type = addons["results"]["twilio_carrier_info"]["result"]["carrier"]["type"];
 							if ( carrier_type ) {
 								if ( carrier_type !== "voip" ) {
-									console.log( carrier_type );
-									console.log( req.body["Caller"] )
-									console.log( personal.twilio_creds.forward_phone_number );
 									console.log( "Its a real non-voip call!" );
+									console.log( carrier_type );
+									console.log( "From: " +  req.body["Caller"] )
+									console.log( "Forwarding To: " + personal.twilio_creds.conference_pivot_number );
 									const response = new twilio.twiml.VoiceResponse();
-									//response.say( "Connecting" );
+									response.say( "Connecting" );
 									response.dial( personal.twilio_creds.conference_pivot_number , {
 										//hangupOnStar: "true" ,
 										//action: '/twiliocallsanitizerhangup'
