@@ -377,10 +377,11 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 												// 	// waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
 												// 	startConferenceOnEnter: true
 												// });
+
 												// twiml.redirect({
 												//     method: 'POST'
 												// } , 'http://pigeons.com/twiml.xml' );
-												var twiml = new twilio.TwimlResponse();
+
 												twiml.dial( function( node ) {
 													node.conference( joining_name , {
 														startConferenceOnEnter: true
