@@ -297,7 +297,6 @@ function join_party( conferenceName , phone_number ) {
 	} , 3000 );
 }
 
-twiliopivotfilter
 
 // https://www.twilio.com/console/lookup
 app.post( "/twiliopivotfilter" , async function( req , res ) {
