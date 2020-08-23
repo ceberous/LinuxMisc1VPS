@@ -265,6 +265,17 @@ function ConnectBothParties( party_one = {} , party_two = {} , confrence_name ) 
 
 function sleep( ms ) { return new Promise( resolve => setTimeout( resolve , ms ) ); }
 
+function join_forwarding_number() {
+	setTimeout( ()=> {
+		let twilio_client = require( "twilio" )( personal.twilio_creds.ACCOUNT_SID , personal.twilio_creds.AUTH_TOKEN );
+		twilio_client.calls.create({
+			from: personal.twilio_creds.conference_pivot_number,
+			to: personal.twilio_creds.forward_phone_number ,
+			url: "https://ceberous.org/twiliojoinconference?id=" + conferenceName
+		});
+	} , 1000 );
+}
+
 // https://www.twilio.com/console/lookup
 app.post( "/twiliocallsanitizer" , async function( req , res ) {
 	let success = false;
@@ -363,11 +374,12 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									// the URL.
 									let twilio_client = require( "twilio" )( personal.twilio_creds.ACCOUNT_SID , personal.twilio_creds.AUTH_TOKEN );
 
-									twilio_client.calls.create({
-										from: personal.twilio_creds.conference_pivot_number,
-										to: personal.twilio_creds.forward_phone_number ,
-										url: "https://ceberous.org/twiliojoinconference?id=" + conferenceName
-									});
+									// twilio_client.calls.create({
+									// 	from: personal.twilio_creds.conference_pivot_number,
+									// 	to: personal.twilio_creds.forward_phone_number ,
+									// 	url: "https://ceberous.org/twiliojoinconference?id=" + conferenceName
+									// });
+									join_forwarding_number();
 									twilio_client.calls.create({
 										from: personal.twilio_creds.conference_pivot_number,
 										to: req.body["Caller"] ,
