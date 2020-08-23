@@ -346,7 +346,7 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									console.log( "Its a voip call!" );
 									console.log( carrier_type );
 									console.log( "From: " +  req.body["Caller"] )
-									//console.log( "Forwarding To: " + personal.twilio_creds.conference_pivot_number );
+									console.log( "Forwarding To: " + personal.twilio_creds.conference_pivot_number );
 									// if ( req.body["Caller"] === personal.twilio_creds.conference_pivot_number ) {
 									// 	// conference name will be a random number between 0 and 10000
 									// 	// join_party( conferenceName , req.body["Caller"] );
@@ -394,12 +394,12 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									// 		}
 									// 	}
 
-										// const twiml = new twilio.twiml.VoiceResponse();
-										// twiml.say( "Calling You Back" );
-										// res.writeHead( 200 , { "Content-Type": "text/xml" });
-										// res.end( twiml.toString() );
-										// success = true;
-									}
+									// 	// const twiml = new twilio.twiml.VoiceResponse();
+									// 	// twiml.say( "Calling You Back" );
+									// 	// res.writeHead( 200 , { "Content-Type": "text/xml" });
+									// 	// res.end( twiml.toString() );
+									// 	// success = true;
+									// }
 								}
 							}
 						}
