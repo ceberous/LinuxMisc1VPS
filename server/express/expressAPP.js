@@ -390,9 +390,9 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									// 		startConferenceOnEnter: false
 									// 	});
 									// });
-									res.writeHead( 200 , { "Content-Type": "text/xml" });
 									res.say( "calling you back" );
-									res.end( twiml.toString());
+									res.writeHead( 200 , { "Content-Type": "text/xml" });
+									res.end( twiml.toString() );
 									//return res.send( response.toString() );
 									success = true;
 									twilio_client.calls.create({
