@@ -245,7 +245,7 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									);
 									const response = new twilio.twiml.VoiceResponse();
 									response.say( "connected" );
-									response.set('Content-Type', 'text/xml');
+									res.set('Content-Type', 'text/xml');
 									//response.hangup();
 									return response.send( response.toString() );
 									success = true;
@@ -271,7 +271,7 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									response.say( "connected" );
 									response.set('Content-Type', 'text/xml');
 									//response.hangup();
-									return response.send( response.toString() );
+									return res.send( response.toString() );
 									success = true;
 								}
 							}
