@@ -320,7 +320,7 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									// let VALID_NON_VOIP = false;
 									// let VALID_NON_VOIP_NUMBER_PHONE_NUMBER = false;
 
-									response.set( 'Content-Type' , 'text/xml' );
+									//response.set( 'Content-Type' , 'text/xml' );
 									response.hangup();
 									// let party_one_response = await response.dial().conference( confrence_name ).create({
 									// 	from: req.body["Caller"] ,
