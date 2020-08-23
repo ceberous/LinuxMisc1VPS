@@ -347,6 +347,7 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									console.log( carrier_type );
 									console.log( "From: " +  req.body["Caller"] )
 									console.log( "Forwarding To: " + personal.twilio_creds.conference_pivot_number );
+									const twiml = new twilio.twiml.VoiceResponse();
 									twiml.say( "wadu" );
 									res.writeHead( 200 , { "Content-Type": "text/xml" });
 									res.end( twiml.toString() );
