@@ -136,15 +136,40 @@ app.post( "/twiliobirthdaycall" , function( req , res ) {
 });
 
 
+// https://github.com/TwilioDevEd/call-forwarding-node/blob/master/routes/index.js
+// app.post( "/twiliocallsanitizerconfrence" , function( req , res ) {
+// 	let success = false;
+// 	try {
+// 		const response = new twilio.twiml.VoiceResponse();
+// 		response.say( "Forwarding" );
+// 		response.dial().conference( "meetup" , {
+// 			"startConferenceOnEnter": "true"
+// 		});
+// 		// response.dial( personal.twilio_creds.forward_phone_number )
+// 		//console.log( response );
+// 		res.set('Content-Type', 'text/xml');
+// 		response.hangup();
+// 		return res.send( response.toString() );
+// 		success = true;
+// 	}
+// 	catch( e ) { console.log( e ); }
+// 	if ( !success ) {
+// 		const twiml = new twilio.twiml.VoiceResponse();
+// 		twiml.say( "wadu" );
+// 		res.writeHead( 200 , { "Content-Type": "text/xml" });
+// 		res.end( twiml.toString() );
+// 	}
+// });
+
 app.post( "/twiliocallsanitizerconfrence" , function( req , res ) {
 	let success = false;
 	try {
 		const response = new twilio.twiml.VoiceResponse();
 		response.say( "Forwarding" );
-		response.dial( personal.twilio_creds.forward_phone_number )
 		response.dial().conference( "meetup" , {
 			"startConferenceOnEnter": "true"
 		});
+		// response.dial( personal.twilio_creds.forward_phone_number )
 		//console.log( response );
 		res.set('Content-Type', 'text/xml');
 		response.hangup();
@@ -159,6 +184,35 @@ app.post( "/twiliocallsanitizerconfrence" , function( req , res ) {
 		res.end( twiml.toString() );
 	}
 });
+
+
+function ConnectParty( to_number , from_number , confrence_name ) {
+	return new Promise( function( resolve , reject ) {
+		try {
+			response.dial().conference( confrence_name ).create({
+				from: from_number ,
+				to: to_number
+			}).then( participant => {
+				console.log( participant.callSid );
+				resolve();
+				return;
+			});
+		}
+		catch( error ) { console.log( error ); reject( error ); return; }
+	});
+}
+
+function ConnectBothParties( party_one = {} , party_two = {} ) {
+	return new Promise( async function( resolve , reject ) {
+		try {
+			await ConnectParty( party_one.to || req.body["Caller"] , party_one.from || personal.twilio_creds.from_phone_number , "wadu" );
+			await ConnectParty(  party_two.to || personal.twilio_creds.forward_phone_number ,  party_two.from || personal.twilio_creds.from_phone_number , "wadu" );
+			resolve();
+			return;
+		}
+		catch( error ) { console.log( error ); reject( error ); return; }
+	});
+}
 
 // https://www.twilio.com/console/lookup
 app.post( "/twiliocallsanitizer" , async function( req , res ) {
@@ -179,12 +233,23 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									console.log( "From: " +  req.body["Caller"] )
 									console.log( "Forwarding To: " + personal.twilio_creds.conference_pivot_number );
 									const response = new twilio.twiml.VoiceResponse();
-									response.say( "Connecting" );
-									response.dial( personal.twilio_creds.conference_pivot_number , {
-										//hangupOnStar: "true" ,
-										//action: '/twiliocallsanitizerhangup'
-									});
-									//console.log( response );
+									await ConnectBothParties();
+									const twiml = new twilio.twiml.VoiceResponse();
+									twiml.say( "connected" );
+									res.set('Content-Type', 'text/xml');
+									//response.hangup();
+									return res.send( response.toString() );
+									success = true;
+								}
+								else if ( carrier_type === "voip" ) {
+									console.log( "Its a voip call!" );
+									console.log( carrier_type );
+									console.log( "From: " +  req.body["Caller"] )
+									console.log( "Forwarding To: " + personal.twilio_creds.conference_pivot_number );
+									const response = new twilio.twiml.VoiceResponse();
+									await ConnectBothParties();
+									const twiml = new twilio.twiml.VoiceResponse();
+									twiml.say( "connected" );
 									res.set('Content-Type', 'text/xml');
 									//response.hangup();
 									return res.send( response.toString() );
