@@ -362,9 +362,9 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 
 									// Now return TwiML to the caller to put them in the conference, using the
 									// same name.
-									const twiml = new twilio.TwimlResponse();
-										twiml.dial( function( node ) {
-											node.conference( conferenceName , {
+									const twiml = new twilio.twiml.VoiceResponse();
+									twiml.dial( function( node ) {
+										node.conference( conferenceName , {
 											//waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
 											startConferenceOnEnter: false
 										});
