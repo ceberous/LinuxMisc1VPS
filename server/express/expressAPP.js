@@ -204,7 +204,7 @@ app.post( "/twiliojoinconference" , function( req , res ) {
 			// 	});
 			// });
 			console.log( `${req.body["Caller"]} is joining conference ${joining_name}` );
-			const twiml = new twilio.twiml.VoiceResponse();
+			// const twiml = new twilio.twiml.VoiceResponse();
 			// twiml.dial( function( node ) {
 			// 	node.conference( joining_name , {
 			// 		//waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
