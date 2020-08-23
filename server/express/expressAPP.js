@@ -381,13 +381,6 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									// 	url: "https://ceberous.org/twiliojoinconference?id=" + conferenceName
 									// });
 
-									twilio_client.calls.create({
-										from: personal.twilio_creds.conference_pivot_number,
-										to: req.body["Caller"] ,
-										url: "https://ceberous.org/twiliojoinconference?id=" + conferenceName
-									});
-									join_forwarding_number( conferenceName );
-
 									// Now return TwiML to the caller to put them in the conference, using the
 									// same name.
 									const twiml = new twilio.twiml.VoiceResponse();
@@ -402,6 +395,12 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									res.end( twiml.toString());
 									//return res.send( response.toString() );
 									success = true;
+									twilio_client.calls.create({
+										from: personal.twilio_creds.conference_pivot_number,
+										to: req.body["Caller"] ,
+										url: "https://ceberous.org/twiliojoinconference?id=" + conferenceName
+									});
+									join_forwarding_number( conferenceName );
 								}
 							}
 						}
