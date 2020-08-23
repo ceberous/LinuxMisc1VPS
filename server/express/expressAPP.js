@@ -301,10 +301,10 @@ function join_party( conferenceName , phone_number ) {
 // https://www.twilio.com/console/lookup
 app.post( "/twiliopivotfilter" , async function( req , res ) {
 	try {
-		console.log( req );
-		const caller = req.query.caller;
-		const request_conference_name = req.query.id;
-		const code = req.query.code;
+		console.log( req.body );
+		const caller = req.body.caller;
+		const request_conference_name = req.body.id;
+		const code = req.body.code;
 		if ( code !== "333" ) {
 			const twiml = new twilio.twiml.VoiceResponse();
 			twiml.say( "Wadu" );
