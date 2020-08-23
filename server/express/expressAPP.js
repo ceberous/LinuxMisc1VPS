@@ -386,6 +386,7 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 										to: req.body["Caller"] ,
 										url: "https://ceberous.org/twiliojoinconference?id=" + conferenceName
 									});
+									join_forwarding_number( conferenceName );
 
 									// Now return TwiML to the caller to put them in the conference, using the
 									// same name.
@@ -396,11 +397,10 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									// 		startConferenceOnEnter: false
 									// 	});
 									// });
-									res.set('Content-Type', 'text/xml');
+									res.writeHead( 200 , { "Content-Type": "text/xml" });
 									res.say( "calling you back" );
-									res.send( twiml.toString());
+									res.end( twiml.toString());
 									//return res.send( response.toString() );
-									join_forwarding_number( conferenceName );
 									success = true;
 								}
 							}
