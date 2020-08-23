@@ -368,12 +368,6 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 										url: "https://ceberous.org/twiliojoinconference?id=" + conferenceName
 									});
 
-									twilio_client.calls.create({
-										from: personal.twilio_creds.conference_pivot_number,
-										to: personal.twilio_creds.forward_phone_number ,
-										url: "https://ceberous.org/twiliojoinconference?id=" + conferenceName
-									});
-
 									// Now return TwiML to the caller to put them in the conference, using the
 									// same name.
 									const twiml = new twilio.twiml.VoiceResponse();
