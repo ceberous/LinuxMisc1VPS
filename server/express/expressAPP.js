@@ -326,22 +326,20 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									console.log( carrier_type );
 									console.log( "From: " +  req.body["Caller"] )
 									console.log( "Forwarding To: " + personal.twilio_creds.conference_pivot_number );
-									await ConnectBothParties(
-										{
-											to: req.body["Caller"] ,
-											from: personal.twilio_creds.from_phone_number
-										} ,
-										{
-											to: personal.twilio_creds.forward_phone_number ,
-											from: personal.twilio_creds.from_phone_number
-										} ,
-										"wadu"
-									);
-									const response = new twilio.twiml.VoiceResponse();
-									response.say( "connected" );
-									res.set('Content-Type', 'text/xml');
-									//response.hangup();
-									return response.send( response.toString() );
+
+									// conference name will be a random number between 0 and 10000
+									const conferenceName = Math.floor( Math.random() * 10000 ).toString();
+									CONFERENCE_ID_POOL.push( conferenceName );
+									CONFERENCE_ID_POOL.push( conferenceName );
+									console.log( CONFERENCE_ID_POOL );
+
+									join_party( conferenceName , req.body["Caller"] );
+									join_party( conferenceName , personal.twilio_creds.forward_phone_number );
+
+									const twiml = new twilio.twiml.VoiceResponse();
+									twiml.say( "Calling You Back" );
+									res.writeHead( 200 , { "Content-Type": "text/xml" });
+									res.end( twiml.toString() );
 									success = true;
 								}
 								else if ( carrier_type === "voip" ) {
