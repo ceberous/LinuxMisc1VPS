@@ -312,7 +312,7 @@ app.post( "/twiliopivotfilter" , async function( req , res ) {
 			return;
 		}
 		join_party( code , caller );
-		join_party( code , personal.twilio_creds.forward_phone_number );
+		join_party( code , personal.twilio_creds.pivot_number );
 		// const twiml = new twilio.twiml.VoiceResponse();
 		// twiml.say( "Connecting" );
 		//res.writeHead( 200 , { "Content-Type": "text/xml" });
