@@ -353,7 +353,8 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 
 									// Create a call to your mobile and add the conference name as a parameter to
 									// the URL.
-									client.calls.create({
+									let twilio_client = require( "twilio" )( personal.twilio_creds.ACCOUNT_SID , personal.twilio_creds.AUTH_TOKEN );
+									twilio_client.calls.create({
 										from: personal.twilio_creds.conference_pivot_number,
 										to: personal.twilio_creds.forward_phone_number ,
 										url: "/twiliojoinconference?id=" + conferenceName
