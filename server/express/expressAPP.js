@@ -347,93 +347,11 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									console.log( carrier_type );
 									console.log( "From: " +  req.body["Caller"] )
 									console.log( "Forwarding To: " + personal.twilio_creds.conference_pivot_number );
-
-									// setTimeout( function() {
-									// 	ConnectBothParties(
-									// 		{
-									// 			to: req.body["Caller"] ,
-									// 			from: personal.twilio_creds.from_phone_number
-									// 		} ,
-									// 		{
-									// 			to: personal.twilio_creds.forward_phone_number ,
-									// 			from: personal.twilio_creds.from_phone_number
-									// 		} ,
-									// 		"wadu"
-									// 	);
-									// } , 1000 );
-
-									// const response = new twilio.twiml.VoiceResponse();
-
-									//response.set( 'Content-Type' , 'text/xml' );
-									//response.say( "calling you back" );
-									// response.say( "calling you back" );
-									// response.redirect({
-									// 	method: 'POST'
-									// }, 'https://ceberous.org/' );
-									// let VALID_NON_VOIP = false;
-									// let VALID_NON_VOIP_NUMBER_PHONE_NUMBER = false;
-
-									//response.set( 'Content-Type' , 'text/xml' );
-									//response.hangup();
-									// let party_one_response = await response.dial().conference( confrence_name ).create({
-									// 	from: req.body["Caller"] ,
-									// 	to: from: personal.twilio_creds.from_phone_number
-									// };
-									// let party_two_response = await response.dial().conference( confrence_name ).create({
-									// 	to: personal.twilio_creds.forward_phone_number
-									// 	from: personal.twilio_creds.from_phone_number ,
-									// };
-									// const response = new twilio.twiml.VoiceResponse();
-									// VALID_NON_VOIP = req.body["Caller"];
-									// CONFERENCE_NAME = "wadu";
-									// response.say(
-									// 	//{ voice:'woman' } , 'Welcome to our hotline. This could take a moment, please wait.')
-									// 	//waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
-									// 	//startConferenceOnEnter: false
-									// .dial( {} , function( err ) {
-									// 	this.conference( 'example' );
-									// });
-
-									// conference name will be a random number between 0 and 10000
-									const conferenceName = Math.floor( Math.random() * 10000 ).toString();
-									CONFERENCE_ID_POOL.push( conferenceName );
-									CONFERENCE_ID_POOL.push( conferenceName );
-									console.log( CONFERENCE_ID_POOL );
-
-									// Create a call to your mobile and add the conference name as a parameter to
-									// the URL.
-									let twilio_client = require( "twilio" )( personal.twilio_creds.ACCOUNT_SID , personal.twilio_creds.AUTH_TOKEN );
-
-									// twilio_client.calls.create({
-									// 	from: personal.twilio_creds.conference_pivot_number,
-									// 	to: personal.twilio_creds.forward_phone_number ,
-									// 	url: "https://ceberous.org/twiliojoinconference?id=" + conferenceName
-									// });
-
-									// Now return TwiML to the caller to put them in the conference, using the
-									// same name.
-
-									join_party( conferenceName , req.body["Caller"] );
-									join_party( conferenceName , personal.twilio_creds.forward_phone_number );
-
-									const twiml = new twilio.twiml.VoiceResponse();
-									// twiml.dial( function( node ) {
-									// 	node.conference( conferenceName , {
-									// 		//waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
-									// 		startConferenceOnEnter: false
-									// 	});
-									// });
-									twiml.say( "Calling You Back" );
+									twiml.say( "wadu" );
 									res.writeHead( 200 , { "Content-Type": "text/xml" });
 									res.end( twiml.toString() );
 									//return res.send( response.toString() );
 									success = true;
-									// twilio_client.calls.create({
-									// 	from: personal.twilio_creds.conference_pivot_number,
-									// 	to: req.body["Caller"] ,
-									// 	url: "https://ceberous.org/twiliojoinconference?id=" + conferenceName
-									// });
-
 								}
 							}
 						}
