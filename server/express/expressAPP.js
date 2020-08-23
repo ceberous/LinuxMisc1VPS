@@ -197,10 +197,10 @@ function ConnectParty( to_number , from_number , confrence_name ) {
 			// 	resolve();
 			// 	return;
 			// });
-			let twilio_client = require( "twilio" )( personal.twilio_creds.ACCOUNT_SID , personal.twilio_creds.AUTH_TOKEN );
-			//const response = new twilio.twiml.VoiceResponse();
+			//let twilio_client = require( "twilio" )( personal.twilio_creds.ACCOUNT_SID , personal.twilio_creds.AUTH_TOKEN );
+			const response = new twilio.twiml.VoiceResponse();
 			console.log( `"Connnecting: ${to_number} to ${confrence_name}` );
-			twilio_client.dial().conference( confrence_name ).create({
+			response.dial().conference( confrence_name ).create({
 				from: from_number ,
 				to: to_number
 			}).then( participant => {
