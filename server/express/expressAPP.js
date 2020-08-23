@@ -302,6 +302,7 @@ function join_party( conferenceName , phone_number ) {
 app.post( "/twiliopivotfilter" , async function( req , res ) {
 	try {
 		console.log( req.body );
+		console.log( typeof( req.body ) );
 		const caller = req.body.caller;
 		const request_conference_name = req.body.id;
 		const code = req.body.code;
