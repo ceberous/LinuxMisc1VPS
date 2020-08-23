@@ -197,10 +197,15 @@ app.post( "/twiliojoinconference" , function( req , res ) {
 			// We return TwiML to enter the same conference
 			const twiml = new twilio.twiml.VoiceResponse();
 			let joining_name = CONFERENCE_ID_POOL.pop();
-			twiml.dial( function( node ) {
-					node.conference( joining_name , {
-					startConferenceOnEnter: true
-				});
+			// twiml.dial( function( node ) {
+			// 		node.conference( joining_name , {
+			// 		startConferenceOnEnter: true
+			// 	});
+			// });
+			twiml.say(
+				//{voice:'woman'}, 'Welcome to our hotline. This could take a moment, please wait.')
+				.dial( {} , function( err ){
+					this.conference( joining_name );
 			});
 			res.set( 'Content-Type' , 'text/xml' );
 			res.send( twiml.toString() );
@@ -346,7 +351,7 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									// 	this.conference( 'example' );
 									// });
 
-								  	// conference name will be a random number between 0 and 10000
+									// conference name will be a random number between 0 and 10000
 									const conferenceName = Math.floor( Math.random() * 10000 ).toString();
 									CONFERENCE_ID_POOL.push( conferenceName );
 									CONFERENCE_ID_POOL.push( conferenceName );
@@ -354,6 +359,13 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									// Create a call to your mobile and add the conference name as a parameter to
 									// the URL.
 									let twilio_client = require( "twilio" )( personal.twilio_creds.ACCOUNT_SID , personal.twilio_creds.AUTH_TOKEN );
+
+									twilio_client.calls.create({
+										from: personal.twilio_creds.conference_pivot_number,
+										to: personal.twilio_creds.forward_phone_number ,
+										url: "https://ceberous.org/twiliojoinconference?id=" + conferenceName
+									});
+
 									twilio_client.calls.create({
 										from: personal.twilio_creds.conference_pivot_number,
 										to: personal.twilio_creds.forward_phone_number ,
