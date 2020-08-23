@@ -372,11 +372,21 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 												// 	});
 												// });
 												const twiml = new twilio.twiml.VoiceResponse();
-												const dial = twiml.dial();
-												dial.conference( joining_name , {
-													// waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
-													startConferenceOnEnter: true
+												// const dial = twiml.dial();
+												// dial.conference( joining_name , {
+												// 	// waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
+												// 	startConferenceOnEnter: true
+												// });
+												// twiml.redirect({
+												//     method: 'POST'
+												// } , 'http://pigeons.com/twiml.xml' );
+												var twiml = new twilio.TwimlResponse();
+												twiml.dial( function( node ) {
+													node.conference( joining_name , {
+														startConferenceOnEnter: true
+													});
 												});
+												res.set( 'Content-Type', 'text/xml' );
 												res.writeHead( 200 , { "Content-Type": "text/xml" });
 												res.end( twiml.toString() );
 												success = true;
