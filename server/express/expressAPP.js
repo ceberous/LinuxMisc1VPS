@@ -195,19 +195,20 @@ app.post( "/twiliojoinconference" , function( req , res ) {
 	if ( CONFERENCE_ID_POOL.length > 0 ) {
 		if ( CONFERENCE_ID_POOL[ 0 ] === request_conference_name ) {
 			// We return TwiML to enter the same conference
-			const twiml = new twilio.twiml.VoiceResponse();
+			//const twiml = new twilio.twiml.VoiceResponse();
 			let joining_name = CONFERENCE_ID_POOL.pop();
 			// twiml.dial( function( node ) {
 			// 		node.conference( joining_name , {
 			// 		startConferenceOnEnter: true
 			// 	});
 			// });
-			twiml.say(
-				{ voice:'woman'} , 'Connecting' )
-				.dial( {} , function( err ){
-					this.conference( joining_name );
-				}
-			);
+			const twiml = new twilio.twiml.VoiceResponse();
+			twiml.dial( function( node ) {
+				node.conference( joining_name , {
+					//waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
+					startConferenceOnEnter: false
+				});
+			});
 			res.set( 'Content-Type' , 'text/xml' );
 			res.send( twiml.toString() );
 			return;
