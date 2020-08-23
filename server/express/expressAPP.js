@@ -195,9 +195,9 @@ app.post( "/twiliojoinconference" , function( req , res ) {
 	if ( CONFERENCE_ID_POOL.length > 0 ) {
 		if ( CONFERENCE_ID_POOL[ 0 ] === request_conference_name ) {
 			// We return TwiML to enter the same conference
-			var twiml = new twilio.TwimlResponse();
+			const twiml = new twilio.twiml.VoiceResponse();
 			let joining_name = CONFERENCE_ID_POOL.pop();
-				twiml.dial( function( node ) {
+			twiml.dial( function( node ) {
 					node.conference( joining_name , {
 					startConferenceOnEnter: true
 				});
