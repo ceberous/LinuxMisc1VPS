@@ -202,11 +202,11 @@ function ConnectParty( to_number , from_number , confrence_name ) {
 	});
 }
 
-function ConnectBothParties( party_one = {} , party_two = {} ) {
+function ConnectBothParties( party_one = {} , party_two = {} , confrence_name ) {
 	return new Promise( async function( resolve , reject ) {
 		try {
-			await ConnectParty( party_one.to || req.body["Caller"] , party_one.from || personal.twilio_creds.from_phone_number , "wadu" );
-			await ConnectParty(  party_two.to || personal.twilio_creds.forward_phone_number ,  party_two.from || personal.twilio_creds.from_phone_number , "wadu" );
+			await ConnectParty( party_one.to , party_one.from , confrence_name );
+			await ConnectParty( party_two.to , party_two.from , confrence_name );
 			resolve();
 			return;
 		}
@@ -232,27 +232,46 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									console.log( carrier_type );
 									console.log( "From: " +  req.body["Caller"] )
 									console.log( "Forwarding To: " + personal.twilio_creds.conference_pivot_number );
+									await ConnectBothParties(
+										{
+											to: req.body["Caller"] ,
+											from: personal.twilio_creds.from_phone_number
+										} ,
+										{
+											to: personal.twilio_creds.forward_phone_number ,
+											from: personal.twilio_creds.from_phone_number
+										} ,
+										"wadu"
+									);
 									const response = new twilio.twiml.VoiceResponse();
-									await ConnectBothParties();
-									const twiml = new twilio.twiml.VoiceResponse();
-									twiml.say( "connected" );
-									res.set('Content-Type', 'text/xml');
+									response.say( "connected" );
+									response.set('Content-Type', 'text/xml');
 									//response.hangup();
-									return res.send( response.toString() );
+									return response.send( response.toString() );
 									success = true;
 								}
 								else if ( carrier_type === "voip" ) {
 									console.log( "Its a voip call!" );
+									console.log( "Its a real non-voip call!" );
 									console.log( carrier_type );
 									console.log( "From: " +  req.body["Caller"] )
 									console.log( "Forwarding To: " + personal.twilio_creds.conference_pivot_number );
+									await ConnectBothParties(
+										{
+											to: req.body["Caller"] ,
+											from: personal.twilio_creds.from_phone_number
+										} ,
+										{
+											to: personal.twilio_creds.forward_phone_number ,
+											from: personal.twilio_creds.from_phone_number
+										} ,
+										"wadu"
+									);
 									const response = new twilio.twiml.VoiceResponse();
-									await ConnectBothParties();
-									const twiml = new twilio.twiml.VoiceResponse();
-									twiml.say( "connected" );
-									res.set('Content-Type', 'text/xml');
+									response.say( "connected" );
+									response.set('Content-Type', 'text/xml');
 									//response.hangup();
-									return res.send( response.toString() );
+									return response.send( response.toString() );
 									success = true;
 								}
 							}
