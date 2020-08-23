@@ -214,7 +214,7 @@ function ConnectParty( response , to_number , from_number , confrence_name ) {
 function ConnectBothParties( party_one = {} , party_two = {} , confrence_name ) {
 	return new Promise( async function( resolve , reject ) {
 		try {
-			const result = await Promis.all([
+			const result = await Promise.all([
 				ConnectParty( party_one.to , party_one.from , confrence_name ) ,
 				ConnectParty( party_two.to , party_two.from , confrence_name )
 			]);
