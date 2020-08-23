@@ -15,6 +15,9 @@ const twilio = require( "twilio" );
 
 function sendJSONResponse( res , status , content ) { if ( status ) { res.status( status ); } res.json( content ); }
 
+let VALID_NON_VOIP = false;
+let VALID_NON_VOIP_NUMBER_PHONE_NUMBER = false;
+
 // https://www.twilio.com/docs/lookup/tutorials/carrier-and-caller-name
 function TwilioLookupNumber( phone_number ) {
 	return new Promise( function( resolve , reject ) {
@@ -186,6 +189,28 @@ app.post( "/twiliocallsanitizerconfrence" , function( req , res ) {
 });
 
 
+app.post( "/twilioconference" , function( req , res ) {
+	let success = false;
+	try {
+		const response = new twilio.twiml.VoiceResponse();
+		response.say( "Forwarding" );
+		response.dial().conference( "meetup" , {
+			"startConferenceOnEnter": "true"
+		});
+		// response.dial( personal.twilio_creds.forward_phone_number )
+		//console.log( response );
+		return res.send( response.toString() );
+		success = true;
+	}
+	catch( e ) { console.log( e ); }
+	if ( !success ) {
+		const twiml = new twilio.twiml.VoiceResponse();
+		twiml.say( "wadu" );
+		res.writeHead( 200 , { "Content-Type": "text/xml" });
+		res.end( twiml.toString() );
+	}
+});
+
 function ConnectParty( to_number , from_number , confrence_name ) {
 	return new Promise( function( resolve , reject ) {
 		try {
@@ -197,10 +222,10 @@ function ConnectParty( to_number , from_number , confrence_name ) {
 			// 	resolve();
 			// 	return;
 			// });
-			//let twilio_client = require( "twilio" )( personal.twilio_creds.ACCOUNT_SID , personal.twilio_creds.AUTH_TOKEN );
-			const response = new twilio.twiml.VoiceResponse();
+			let twilio_client = require( "twilio" )( personal.twilio_creds.ACCOUNT_SID , personal.twilio_creds.AUTH_TOKEN );
+			//const response = new twilio.twiml.VoiceResponse();
 			console.log( `"Connnecting: ${to_number} to ${confrence_name}` );
-			response.dial().conference( confrence_name ).create({
+			twilio_client.conferences( confrence_name ).create({
 				from: from_number ,
 				to: to_number
 			}).then( participant => {
@@ -283,10 +308,20 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 											"wadu"
 										);
 									} , 1000 );
+
 									const response = new twilio.twiml.VoiceResponse();
-									response.say( "calling you back" );
+
 									//response.set( 'Content-Type' , 'text/xml' );
-									//response.hangup();
+									//response.say( "calling you back" );
+									// response.say( "calling you back" );
+									// response.redirect({
+									// 	method: 'POST'
+									// }, 'https://ceberous.org/' );
+									// let VALID_NON_VOIP = false;
+									// let VALID_NON_VOIP_NUMBER_PHONE_NUMBER = false;
+
+									response.set( 'Content-Type' , 'text/xml' );
+									response.hangup();
 									// let party_one_response = await response.dial().conference( confrence_name ).create({
 									// 	from: req.body["Caller"] ,
 									// 	to: from: personal.twilio_creds.from_phone_number
