@@ -203,13 +203,27 @@ app.post( "/twiliojoinconference" , function( req , res ) {
 			// 		startConferenceOnEnter: true
 			// 	});
 			// });
+			console.log( `${req.body["Caller"]} is joining conference ${joining_name}` );
 			const twiml = new twilio.twiml.VoiceResponse();
-			twiml.dial( function( node ) {
-				node.conference( joining_name , {
-					//waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
-					startConferenceOnEnter: false
-				});
-			});
+			// twiml.dial( function( node ) {
+			// 	node.conference( joining_name , {
+			// 		//waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
+			// 		startConferenceOnEnter: false
+			// 	});
+			// });
+			const twiml = new twilio.twiml.VoiceResponse();
+			const dial = twiml.dial();
+			dial.conference( joining_name );
+			//console.log( twiml.toString() );
+			// let twilio_client = require( "twilio" )( personal.twilio_creds.ACCOUNT_SID , personal.twilio_creds.AUTH_TOKEN );
+			// twilio_client.conferences( confrence_name ).create({
+			// 	from: from_number ,
+			// 	to: to_number
+			// }).then( participant => {
+			// 	console.log( participant.callSid );
+			// 	resolve();
+			// 	return;
+			// });
 			res.set( 'Content-Type' , 'text/xml' );
 			res.send( twiml.toString() );
 			return;
