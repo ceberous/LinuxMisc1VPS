@@ -346,53 +346,53 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									console.log( "Its a voip call!" );
 									console.log( carrier_type );
 									console.log( "From: " +  req.body["Caller"] )
-									console.log( "Forwarding To: " + personal.twilio_creds.conference_pivot_number );
-									if ( req.body["Caller"] === personal.twilio_creds.conference_pivot_number ) {
-										// conference name will be a random number between 0 and 10000
-										// join_party( conferenceName , req.body["Caller"] );
-										// join_party( conferenceName , personal.twilio_creds.forward_phone_number );
+									//console.log( "Forwarding To: " + personal.twilio_creds.conference_pivot_number );
+									// if ( req.body["Caller"] === personal.twilio_creds.conference_pivot_number ) {
+									// 	// conference name will be a random number between 0 and 10000
+									// 	// join_party( conferenceName , req.body["Caller"] );
+									// 	// join_party( conferenceName , personal.twilio_creds.forward_phone_number );
 
-										if ( CONFERENCE_ID_POOL.length > 0 ) {
-											if ( CONFERENCE_ID_POOL[ 0 ] ) {
-												// We return TwiML to enter the same conference
-												//const twiml = new twilio.twiml.VoiceResponse();
-												let joining_name = CONFERENCE_ID_POOL.pop();
-												console.log( CONFERENCE_ID_POOL );
-												// twiml.dial( function( node ) {
-												// 		node.conference( joining_name , {
-												// 		startConferenceOnEnter: true
-												// 	});
-												// });
-												console.log( `${req.body["Caller"]} is joining conference ${joining_name}` );
-												// const twiml = new twilio.twiml.VoiceResponse();
-												// twiml.dial( function( node ) {
-												// 	node.conference( joining_name , {
-												// 		//waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
-												// 		startConferenceOnEnter: false
-												// 	});
-												// });
-												const twiml = new twilio.twiml.VoiceResponse();
-												// const dial = twiml.dial();
-												// dial.conference( joining_name , {
-												// 	// waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
-												// 	startConferenceOnEnter: true
-												// });
+									// 	if ( CONFERENCE_ID_POOL.length > 0 ) {
+									// 		if ( CONFERENCE_ID_POOL[ 0 ] ) {
+									// 			// We return TwiML to enter the same conference
+									// 			//const twiml = new twilio.twiml.VoiceResponse();
+									// 			let joining_name = CONFERENCE_ID_POOL.pop();
+									// 			console.log( CONFERENCE_ID_POOL );
+									// 			// twiml.dial( function( node ) {
+									// 			// 		node.conference( joining_name , {
+									// 			// 		startConferenceOnEnter: true
+									// 			// 	});
+									// 			// });
+									// 			console.log( `${req.body["Caller"]} is joining conference ${joining_name}` );
+									// 			// const twiml = new twilio.twiml.VoiceResponse();
+									// 			// twiml.dial( function( node ) {
+									// 			// 	node.conference( joining_name , {
+									// 			// 		//waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
+									// 			// 		startConferenceOnEnter: false
+									// 			// 	});
+									// 			// });
+									// 			const twiml = new twilio.twiml.VoiceResponse();
+									// 			// const dial = twiml.dial();
+									// 			// dial.conference( joining_name , {
+									// 			// 	// waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
+									// 			// 	startConferenceOnEnter: true
+									// 			// });
 
-												// twiml.redirect({
-												//     method: 'POST'
-												// } , 'http://pigeons.com/twiml.xml' );
+									// 			// twiml.redirect({
+									// 			//     method: 'POST'
+									// 			// } , 'http://pigeons.com/twiml.xml' );
 
-												twiml.dial( function( node ) {
-													node.conference( joining_name , {
-														startConferenceOnEnter: true
-													});
-												});
-												res.set( 'Content-Type', 'text/xml' );
-												res.writeHead( 200 , { "Content-Type": "text/xml" });
-												res.end( twiml.toString() );
-												success = true;
-											}
-										}
+									// 			twiml.dial( function( node ) {
+									// 				node.conference( joining_name , {
+									// 					startConferenceOnEnter: true
+									// 				});
+									// 			});
+									// 			res.set( 'Content-Type', 'text/xml' );
+									// 			res.writeHead( 200 , { "Content-Type": "text/xml" });
+									// 			res.end( twiml.toString() );
+									// 			success = true;
+									// 		}
+									// 	}
 
 										// const twiml = new twilio.twiml.VoiceResponse();
 										// twiml.say( "Calling You Back" );
