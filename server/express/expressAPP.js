@@ -266,16 +266,28 @@ function ConnectBothParties( party_one = {} , party_two = {} , confrence_name ) 
 
 function sleep( ms ) { return new Promise( resolve => setTimeout( resolve , ms ) ); }
 
-function join_forwarding_number( conferenceName ) {
+
+function join_party( conferenceName , phone_number ) {
 	setTimeout( ()=> {
 		let twilio_client = require( "twilio" )( personal.twilio_creds.ACCOUNT_SID , personal.twilio_creds.AUTH_TOKEN );
 		twilio_client.calls.create({
 			from: personal.twilio_creds.conference_pivot_number,
-			to: personal.twilio_creds.forward_phone_number ,
+			to: phone_number ,
 			url: "https://ceberous.org/twiliojoinconference?id=" + conferenceName
 		});
-	} , 1000 );
+	} , 3000 );
 }
+
+// function join_forwarding_number( conferenceName ) {
+// 	setTimeout( ()=> {
+// 		let twilio_client = require( "twilio" )( personal.twilio_creds.ACCOUNT_SID , personal.twilio_creds.AUTH_TOKEN );
+// 		twilio_client.calls.create({
+// 			from: personal.twilio_creds.conference_pivot_number,
+// 			to: personal.twilio_creds.forward_phone_number ,
+// 			url: "https://ceberous.org/twiliojoinconference?id=" + conferenceName
+// 		});
+// 	} , 1000 );
+// }
 
 // https://www.twilio.com/console/lookup
 app.post( "/twiliocallsanitizer" , async function( req , res ) {
@@ -383,6 +395,10 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 
 									// Now return TwiML to the caller to put them in the conference, using the
 									// same name.
+
+									join_party( conferenceName , req.body["Caller"] );
+									join_forwarding_number( conferenceName , personal.twilio_creds.forward_phone_number );
+
 									const twiml = new twilio.twiml.VoiceResponse();
 									// twiml.dial( function( node ) {
 									// 	node.conference( conferenceName , {
@@ -395,12 +411,12 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									res.end( twiml.toString() );
 									//return res.send( response.toString() );
 									success = true;
-									twilio_client.calls.create({
-										from: personal.twilio_creds.conference_pivot_number,
-										to: req.body["Caller"] ,
-										url: "https://ceberous.org/twiliojoinconference?id=" + conferenceName
-									});
-									join_forwarding_number( conferenceName );
+									// twilio_client.calls.create({
+									// 	from: personal.twilio_creds.conference_pivot_number,
+									// 	to: req.body["Caller"] ,
+									// 	url: "https://ceberous.org/twiliojoinconference?id=" + conferenceName
+									// });
+
 								}
 							}
 						}
