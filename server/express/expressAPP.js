@@ -203,10 +203,11 @@ app.post( "/twiliojoinconference" , function( req , res ) {
 			// 	});
 			// });
 			twiml.say(
-				//{voice:'woman'}, 'Welcome to our hotline. This could take a moment, please wait.')
+				{ voice:'woman'} , 'Connecting' )
 				.dial( {} , function( err ){
 					this.conference( joining_name );
-			});
+				}
+			);
 			res.set( 'Content-Type' , 'text/xml' );
 			res.send( twiml.toString() );
 			return;
