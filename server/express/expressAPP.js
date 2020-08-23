@@ -377,8 +377,8 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 													// waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
 													startConferenceOnEnter: true
 												});
-												twiml.set( 'Content-Type' , 'text/xml' );
-												twiml.send( twiml.toString() );
+												res.writeHead( 200 , { "Content-Type": "text/xml" });
+												res.end( twiml.toString() );
 												success = true;
 											}
 										}
