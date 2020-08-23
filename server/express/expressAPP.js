@@ -390,7 +390,6 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									// 		startConferenceOnEnter: false
 									// 	});
 									// });
-									const twiml = new twilio.twiml.VoiceResponse();
 									twiml.say( "Calling You Back" );
 									res.writeHead( 200 , { "Content-Type": "text/xml" });
 									res.end( twiml.toString() );
