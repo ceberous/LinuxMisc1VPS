@@ -213,7 +213,10 @@ app.post( "/twiliojoinconference" , function( req , res ) {
 			// });
 			const twiml = new twilio.twiml.VoiceResponse();
 			const dial = twiml.dial();
-			dial.conference( joining_name );
+			dial.conference( joining_name , {
+				// waitUrl: "http://twimlets.com/holdmusic?Bucket=com.twilio.music.rock",
+				startConferenceOnEnter: true
+			});
 			//console.log( twiml.toString() );
 			// let twilio_client = require( "twilio" )( personal.twilio_creds.ACCOUNT_SID , personal.twilio_creds.AUTH_TOKEN );
 			// twilio_client.conferences( confrence_name ).create({
@@ -224,6 +227,7 @@ app.post( "/twiliojoinconference" , function( req , res ) {
 			// 	resolve();
 			// 	return;
 			// });
+
 			res.set( 'Content-Type' , 'text/xml' );
 			res.send( twiml.toString() );
 			return;
