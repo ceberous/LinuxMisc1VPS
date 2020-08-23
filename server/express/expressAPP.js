@@ -186,7 +186,7 @@ app.post( "/twiliocallsanitizerconfrence" , function( req , res ) {
 });
 
 
-function ConnectParty( response , to_number , from_number , confrence_name ) {
+function ConnectParty( to_number , from_number , confrence_name ) {
 	return new Promise( function( resolve , reject ) {
 		try {
 			// response.dial().conference( confrence_name ).create({
@@ -198,6 +198,8 @@ function ConnectParty( response , to_number , from_number , confrence_name ) {
 			// 	return;
 			// });
 			let twilio_client = require( "twilio" )( personal.twilio_creds.ACCOUNT_SID , personal.twilio_creds.AUTH_TOKEN );
+			//const response = new twilio.twiml.VoiceResponse();
+			console.log( `"Connnecting: ${to_number} to ${confrence_name}` );
 			twilio_client.dial().conference( confrence_name ).create({
 				from: from_number ,
 				to: to_number
@@ -283,8 +285,8 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									} , 1000 );
 									const response = new twilio.twiml.VoiceResponse();
 									response.say( "calling you back" );
-									response.set( 'Content-Type' , 'text/xml' );
-									response.hangup();
+									//response.set( 'Content-Type' , 'text/xml' );
+									//response.hangup();
 									// let party_one_response = await response.dial().conference( confrence_name ).create({
 									// 	from: req.body["Caller"] ,
 									// 	to: from: personal.twilio_creds.from_phone_number
