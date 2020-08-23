@@ -186,7 +186,7 @@ app.post( "/twiliocallsanitizerconfrence" , function( req , res ) {
 });
 
 
-function ConnectParty( to_number , from_number , confrence_name ) {
+function ConnectParty( response , to_number , from_number , confrence_name ) {
 	return new Promise( function( resolve , reject ) {
 		try {
 			response.dial().conference( confrence_name ).create({
@@ -202,7 +202,7 @@ function ConnectParty( to_number , from_number , confrence_name ) {
 	});
 }
 
-function ConnectBothParties( party_one = {} , party_two = {} , confrence_name ) {
+function ConnectBothParties( response , party_one = {} , party_two = {} , confrence_name ) {
 	return new Promise( async function( resolve , reject ) {
 		try {
 			await ConnectParty( party_one.to , party_one.from , confrence_name );
@@ -252,11 +252,11 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 								}
 								else if ( carrier_type === "voip" ) {
 									console.log( "Its a voip call!" );
-									console.log( "Its a real non-voip call!" );
 									console.log( carrier_type );
 									console.log( "From: " +  req.body["Caller"] )
 									console.log( "Forwarding To: " + personal.twilio_creds.conference_pivot_number );
 									await ConnectBothParties(
+										response ,
 										{
 											to: req.body["Caller"] ,
 											from: personal.twilio_creds.from_phone_number
