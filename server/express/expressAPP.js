@@ -215,6 +215,7 @@ app.post( "/twiliojoinconference" , function( req , res ) {
 			return;
 		}
 	}
+	const twiml = new twilio.twiml.VoiceResponse();
 	twiml.say( "wadu" );
 	res.writeHead( 200 , { "Content-Type": "text/xml" });
 	res.end( twiml.toString() );
@@ -397,7 +398,7 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									// same name.
 
 									join_party( conferenceName , req.body["Caller"] );
-									join_forwarding_number( conferenceName , personal.twilio_creds.forward_phone_number );
+									join_party( conferenceName , personal.twilio_creds.forward_phone_number );
 
 									const twiml = new twilio.twiml.VoiceResponse();
 									// twiml.dial( function( node ) {
