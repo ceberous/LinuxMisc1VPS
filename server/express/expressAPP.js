@@ -255,6 +255,7 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									console.log( carrier_type );
 									console.log( "From: " +  req.body["Caller"] )
 									console.log( "Forwarding To: " + personal.twilio_creds.conference_pivot_number );
+									const response = new twilio.twiml.VoiceResponse();
 									await ConnectBothParties(
 										response ,
 										{
@@ -267,7 +268,6 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 										} ,
 										"wadu"
 									);
-									const response = new twilio.twiml.VoiceResponse();
 									response.say( "connected" );
 									response.set('Content-Type', 'text/xml');
 									//response.hangup();
