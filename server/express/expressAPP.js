@@ -297,11 +297,12 @@ function join_party( conferenceName , phone_number ) {
 	} , 3000 );
 }
 
+twiliopivotfilter
 
 // https://www.twilio.com/console/lookup
 app.post( "/twiliopivotfilter" , async function( req , res ) {
 	try {
-		const caller = req.caller.caller;
+		const caller = req.query.caller;
 		const request_conference_name = req.query.id;
 		const code = req.query.code;
 		if ( code !== "333" ) {
