@@ -212,11 +212,6 @@ app.post( "/twiliojoinconference" , function( req , res ) {
 	res.end( twiml.toString() );
 });
 
-
-
-twiliojoinconference
-
-
 function ConnectParty( to_number , from_number , confrence_name ) {
 	return new Promise( function( resolve , reject ) {
 		try {
