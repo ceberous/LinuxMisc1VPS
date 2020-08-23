@@ -189,7 +189,16 @@ app.post( "/twiliocallsanitizerconfrence" , function( req , res ) {
 function ConnectParty( response , to_number , from_number , confrence_name ) {
 	return new Promise( function( resolve , reject ) {
 		try {
-			response.dial().conference( confrence_name ).create({
+			// response.dial().conference( confrence_name ).create({
+			// 	from: from_number ,
+			// 	to: to_number
+			// }).then( participant => {
+			// 	console.log( participant.callSid );
+			// 	resolve();
+			// 	return;
+			// });
+			let twilio_client = require( "twilio" )( personal.twilio_creds.ACCOUNT_SID , personal.twilio_creds.AUTH_TOKEN );
+			twilio_client.dial().conference( confrence_name ).create({
 				from: from_number ,
 				to: to_number
 			}).then( participant => {
@@ -202,17 +211,21 @@ function ConnectParty( response , to_number , from_number , confrence_name ) {
 	});
 }
 
-function ConnectBothParties( response , party_one = {} , party_two = {} , confrence_name ) {
+function ConnectBothParties( party_one = {} , party_two = {} , confrence_name ) {
 	return new Promise( async function( resolve , reject ) {
 		try {
-			await ConnectParty( party_one.to , party_one.from , confrence_name );
-			await ConnectParty( party_two.to , party_two.from , confrence_name );
+			const result = await Promis.all([
+				ConnectParty( party_one.to , party_one.from , confrence_name ) ,
+				ConnectParty( party_two.to , party_two.from , confrence_name )
+			]);
 			resolve();
 			return;
 		}
 		catch( error ) { console.log( error ); reject( error ); return; }
 	});
 }
+
+function sleep( ms ) { return new Promise( resolve => setTimeout( resolve , ms ) ); }
 
 // https://www.twilio.com/console/lookup
 app.post( "/twiliocallsanitizer" , async function( req , res ) {
@@ -255,22 +268,31 @@ app.post( "/twiliocallsanitizer" , async function( req , res ) {
 									console.log( carrier_type );
 									console.log( "From: " +  req.body["Caller"] )
 									console.log( "Forwarding To: " + personal.twilio_creds.conference_pivot_number );
+									setTimeout( function() {
+										ConnectBothParties(
+											{
+												to: req.body["Caller"] ,
+												from: personal.twilio_creds.from_phone_number
+											} ,
+											{
+												to: personal.twilio_creds.forward_phone_number ,
+												from: personal.twilio_creds.from_phone_number
+											} ,
+											"wadu"
+										);
+									} , 1000 );
 									const response = new twilio.twiml.VoiceResponse();
-									await ConnectBothParties(
-										response ,
-										{
-											to: req.body["Caller"] ,
-											from: personal.twilio_creds.from_phone_number
-										} ,
-										{
-											to: personal.twilio_creds.forward_phone_number ,
-											from: personal.twilio_creds.from_phone_number
-										} ,
-										"wadu"
-									);
-									response.say( "connected" );
-									response.set('Content-Type', 'text/xml');
-									//response.hangup();
+									response.say( "calling you back" );
+									response.set( 'Content-Type' , 'text/xml' );
+									response.hangup();
+									// let party_one_response = await response.dial().conference( confrence_name ).create({
+									// 	from: req.body["Caller"] ,
+									// 	to: from: personal.twilio_creds.from_phone_number
+									// };
+									// let party_two_response = await response.dial().conference( confrence_name ).create({
+									// 	to: personal.twilio_creds.forward_phone_number
+									// 	from: personal.twilio_creds.from_phone_number ,
+									// };
 									return res.send( response.toString() );
 									success = true;
 								}
